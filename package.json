@@ -1,0 +1,19 @@
+{
+  "name": "papapick-webapp",
+  "version": "1.0.0",
+  "description": "Papapick Node.js web app for Hostinger deployment.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "papapick",
+    "node",
+    "hostinger"
+  ],
+  "license": "MIT"
+}

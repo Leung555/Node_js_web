@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Papapick — We pick up your car the way Papa used to</title>
+<meta name="description" content="Papapick handles your car's maintenance run: the reminder, the pickup, the bargaining at the garage, and the drop-off — insured, standardised, and tracked live on LINE.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23E2962F'/%3E%3Ctext x='50' y='67' font-family='Arial' font-size='54' font-weight='800' text-anchor='middle' fill='%23161E33'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#161E33;
+  --ink-2:#222C49;
+  --ink-soft:#54608A;
+  --paper:#F3E9D2;
+  --paper-deep:#E8D9B6;
+  --bg:#FBF8F1;
+  --amber:#E2962F;
+  --amber-deep:#BD7A1E;
+  --teal:#2B6358;
+  --teal-soft:#DEEAE6;
+  --red:#B3261E;
+  --white:#FFFFFF;
+  --line-1:rgba(22,30,51,0.10);
+  --line-2:rgba(22,30,51,0.24);
+  --shadow:0 24px 48px -28px rgba(22,30,51,0.40);
+  --shadow-sm:0 10px 24px -16px rgba(22,30,51,0.30);
+  --r-sm:10px;
+  --r-md:18px;
+  --r-lg:28px;
+  --container:1180px;
+  --pad-sec:clamp(64px,9vw,128px);
+  --font-display:'Archivo Expanded', 'Arial Narrow', sans-serif;
+  --font-body:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+/* ============ RESET ============ */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+ul{margin:0;padding:0;list-style:none;}
+input,select,textarea{font-family:inherit;font-size:1rem;color:var(--ink);}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:4px;}
+
+h1,h2,h3{font-family:var(--font-display);margin:0;line-height:1.05;letter-spacing:-0.01em;font-weight:700;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+}
+
+/* ============ UTILITIES ============ */
+.container{max-width:var(--container);margin-inline:auto;padding-inline:clamp(20px,5vw,48px);}
+section{padding-block:var(--pad-sec);}
+.eyebrow{
+  font-family:var(--font-mono);
+  text-transform:uppercase;
+  letter-spacing:0.16em;
+  font-size:0.76rem;
+  color:var(--amber-deep);
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{content:"";width:18px;height:2px;background:var(--amber-deep);display:inline-block;}
+.section-head{max-width:680px;margin-bottom:48px;}
+.section-head h2{font-size:clamp(1.7rem,3.4vw,2.6rem);margin-top:14px;}
+.section-head p{color:var(--ink-soft);font-size:1.05rem;margin-top:16px;max-width:600px;}
+.center{text-align:center;margin-inline:auto;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 28px;border-radius:999px;font-weight:600;font-size:0.95rem;
+  border:2px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+}
+.btn-primary{background:var(--amber);color:var(--ink);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 28px -16px rgba(226,150,47,.65);}
+.btn-outline-dark{border-color:var(--ink);color:var(--ink);background:transparent;}
+.btn-outline-dark:hover{background:var(--ink);color:var(--white);transform:translateY(-2px);}
+.btn-outline-light{border-color:rgba(255,255,255,0.5);color:var(--white);background:transparent;}
+.btn-outline-light:hover{background:rgba(255,255,255,0.12);}
+.btn-block{width:100%;}
+.btn:disabled{opacity:0.45;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
+.btn svg{width:18px;height:18px;}
+
+.icon{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--amber);color:var(--ink);padding:10px 16px;border-radius:0 0 8px 0;font-weight:600;z-index:200;}
+.skip-link:focus{left:0;}
+
+/* ============ DOCKET / TICKET COMPONENT (signature element) ============ */
+.docket{
+  position:relative;
+  background:var(--paper);
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow);
+  padding:30px 30px 30px 44px;
+}
+.docket::before{
+  content:"";position:absolute;left:18px;top:14px;bottom:14px;width:0;
+  border-left:2px dashed var(--line-2);
+}
+.docket::after{
+  content:"";position:absolute;left:11px;top:-7px;width:14px;height:14px;border-radius:50%;
+  background:var(--bg);box-shadow:0 0 0 2px var(--line-1) inset;
+}
+.docket-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
+.docket-label{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.12em;font-size:0.72rem;color:var(--ink-soft);}
+.docket-no{font-family:var(--font-mono);font-size:0.95rem;font-weight:600;letter-spacing:0.03em;margin-top:4px;}
+.docket-stamp{
+  font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;
+  border:2px solid var(--teal);color:var(--teal);border-radius:50%;
+  width:74px;height:74px;display:flex;align-items:center;justify-content:center;text-align:center;
+  transform:rotate(-9deg);flex-shrink:0;line-height:1.15;padding:6px;opacity:0.85;
+}
+.docket-divider{height:1px;background:var(--line-1);margin:20px 0;}
+.docket-row{display:flex;justify-content:space-between;align-items:baseline;font-size:0.92rem;margin-bottom:8px;gap:12px;}
+.docket-row span:first-child{color:var(--ink-soft);}
+.docket-row span:last-child{font-weight:600;text-align:right;}
+
+.status-track{display:flex;align-items:center;margin-top:22px;}
+.status-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;position:relative;}
+.status-dot{width:14px;height:14px;border-radius:50%;background:var(--line-2);border:2px solid var(--paper);box-shadow:0 0 0 2px var(--line-2);position:relative;z-index:2;}
+.status-step.is-done .status-dot{background:var(--teal);box-shadow:0 0 0 2px var(--teal);}
+.status-step.is-current .status-dot{background:var(--amber);box-shadow:0 0 0 2px var(--amber);}
+.status-step.is-current .status-dot::after{
+  content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--amber);
+  animation:pulse-ring 1.8s ease-out infinite;
+}
+@keyframes pulse-ring{0%{transform:scale(0.6);opacity:0.9;}100%{transform:scale(1.6);opacity:0;}}
+.status-step:not(:last-child)::before{
+  content:"";position:absolute;top:6px;left:50%;width:100%;height:2px;background:var(--line-1);z-index:1;
+}
+.status-step.is-done:not(:last-child)::before{background:var(--teal);}
+.status-label{font-family:var(--font-mono);font-size:0.64rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink-soft);text-align:center;}
+.status-step.is-current .status-label{color:var(--ink);font-weight:700;}
+.docket-caption{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:0.82rem;color:var(--ink-soft);}
+.docket-caption svg{width:16px;height:16px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;animation:blink 1.6s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+
+/* ============ HEADER / NAV ============ */
+header{
+  position:sticky;top:0;z-index:100;background:rgba(251,248,241,0.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;transition:border-color .25s ease, box-shadow .25s ease;
+}
+header.is-scrolled{border-color:var(--line-1);box-shadow:0 8px 24px -20px rgba(22,30,51,.5);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding-block:14px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--amber);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1.05rem;flex-shrink:0;}
+.brand-text{display:flex;flex-direction:column;line-height:1.1;}
+.brand-text strong{font-family:var(--font-display);font-size:1.18rem;letter-spacing:0.01em;}
+.brand-text span{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft);}
+.nav-links{display:flex;align-items:center;gap:30px;}
+.nav-links a{font-size:0.94rem;font-weight:500;color:var(--ink-soft);position:relative;padding-block:4px;}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a.is-active{color:var(--ink);font-weight:600;}
+.nav-links a.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--amber);}
+.nav-cta{display:flex;align-items:center;gap:18px;}
+.nav-toggle{display:none;padding:6px;}
+.nav-toggle svg{width:26px;height:26px;}
+
+.mobile-menu{
+  position:fixed;inset:0;background:var(--ink);color:var(--white);z-index:150;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;
+  transform:translateY(-100%);transition:transform .35s ease;
+}
+.mobile-menu.is-open{transform:translateY(0);}
+.mobile-menu a{font-family:var(--font-display);font-size:1.6rem;color:var(--white);}
+.mobile-menu .btn{margin-top:10px;}
+.mobile-close{position:absolute;top:22px;right:24px;color:var(--white);}
+.mobile-close svg{width:28px;height:28px;}
+body.menu-open{overflow:hidden;}
+
+/* ============ HERO ============ */
+.hero{padding-top:clamp(56px,8vw,96px);padding-bottom:clamp(56px,8vw,96px);}
+.hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+.hero h1{font-size:clamp(2.3rem,4.6vw,3.7rem);margin-top:18px;}
+.hero p.lead{margin-top:22px;font-size:1.12rem;color:var(--ink-soft);max-width:540px;}
+.hero-ctas{display:flex;gap:16px;margin-top:32px;flex-wrap:wrap;}
+.trust-strip{display:flex;gap:22px;margin-top:36px;flex-wrap:wrap;}
+.trust-strip li{display:flex;align-items:center;gap:8px;font-size:0.86rem;color:var(--ink-soft);font-weight:500;}
+.trust-strip svg{width:18px;height:18px;color:var(--teal);}
+
+/* ============ PHILOSOPHY ============ */
+.philosophy-copy{max-width:760px;}
+.philosophy-copy h2{font-size:clamp(1.8rem,3.6vw,2.7rem);margin-top:14px;}
+.philosophy-copy p{margin-top:18px;font-size:1.08rem;color:var(--ink-soft);max-width:680px;}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;}
+.pillar{background:var(--white);border:1px solid var(--line-1);border-radius:var(--r-md);padding:30px;}
+.pillar-icon{width:50px;height:50px;border-radius:50%;background:var(--teal-soft);color:var(--teal);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.pillar h3{font-size:1.15rem;}
+.pillar p{margin-top:10px;color:var(--ink-soft);font-size:0.96rem;}
+
+/* ============ TRUST BAND ============ */
+.trust-band{background:var(--ink);color:var(--white);}
+.trust-band .eyebrow{color:var(--amber);}
+.trust-band .eyebrow::before{background:var(--amber);}
+.trust-band .section-head p{color:rgba(255,255,255,0.72);}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+.trust-card{border:1px solid rgba(255,255,255,0.14);border-radius:var(--r-md);padding:28px;background:rgba(255,255,255,0.03);}
+.trust-card .pillar-icon{background:rgba(226,150,47,0.16);color:var(--amber);}
+.trust-card h3{font-size:1.05rem;color:var(--white);}
+.trust-card p{margin-top:10px;color:rgba(255,255,255,0.68);font-size:0.92rem;}
+
+/* ============ FLOW ============ */
+.flow-track{display:flex;gap:0;margin-top:8px;}
+.flow-step{flex:1;position:relative;padding:0 14px 0 0;}
+.flow-step:not(:last-child){border-right:1px dashed var(--line-2);}
+.flow-num{font-family:var(--font-mono);font-size:0.78rem;color:var(--amber-deep);font-weight:700;letter-spacing:0.06em;}
+.flow-icon{width:44px;height:44px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;margin:14px 0 16px;color:var(--ink);}
+.flow-step h3{font-size:1.02rem;margin-top:0;}
+.flow-step p{margin-top:8px;color:var(--ink-soft);font-size:0.88rem;}
+
+/* ============ TEAM ============ */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.team-card{background:var(--white);border:1px solid var(--line-1);border-radius:var(--r-md);padding:28px;text-align:left;}
+.team-avatar{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--amber);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.team-card h3{font-size:1.08rem;}
+.team-role{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--teal);margin-top:4px;display:block;}
+.team-card p{margin-top:12px;color:var(--ink-soft);font-size:0.92rem;}
+
+/* ============ BOOKING ============ */
+.booking-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:start;}
+.booking-panel{background:var(--white);border:1px solid var(--line-1);border-radius:var(--r-lg);padding:clamp(24px,4vw,40px);box-shadow:var(--shadow-sm);}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:0.84rem;font-weight:600;margin-bottom:7px;color:var(--ink);}
+.field-hint{font-size:0.78rem;color:var(--ink-soft);margin-top:6px;}
+.field input[type=text],.field input[type=tel],.field input[type=email],.field input[type=date],.field select,.field textarea{
+  width:100%;padding:12px 14px;border:1.5px solid var(--line-2);border-radius:var(--r-sm);background:var(--bg);
+  transition:border-color .15s ease;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--amber);}
+.field textarea{resize:vertical;min-height:84px;}
+.checkbox-row{display:flex;align-items:center;gap:10px;font-size:0.9rem;margin-bottom:14px;}
+.checkbox-row input{width:18px;height:18px;accent-color:var(--amber);}
+
+.seg-control{display:inline-flex;border:1.5px solid var(--line-2);border-radius:999px;padding:3px;margin-bottom:10px;}
+.seg-btn{padding:8px 18px;border-radius:999px;font-size:0.86rem;font-weight:600;color:var(--ink-soft);}
+.seg-btn.is-active{background:var(--ink);color:var(--white);}
+
+.slots-block{margin-top:6px;}
+.slots-heading{display:flex;align-items:center;gap:8px;font-size:0.84rem;font-weight:600;margin-bottom:12px;}
+.slots-list{display:flex;flex-wrap:wrap;gap:10px;}
+.slot-btn{
+  border:1.5px solid var(--line-2);border-radius:var(--r-sm);padding:10px 16px;font-size:0.86rem;font-weight:600;
+  display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:148px;background:var(--bg);
+  transition:border-color .15s ease, background .15s ease;
+}
+.slot-btn span.cap{font-family:var(--font-mono);font-weight:500;font-size:0.74rem;color:var(--ink-soft);}
+.slot-btn:not(:disabled):hover{border-color:var(--amber);}
+.slot-btn.is-selected{border-color:var(--amber);background:rgba(226,150,47,0.12);}
+.slot-btn.is-selected span.cap{color:var(--amber-deep);}
+.slot-btn:disabled{opacity:0.4;cursor:not-allowed;text-decoration:line-through;}
+.slots-status{font-size:0.86rem;color:var(--ink-soft);font-family:var(--font-mono);}
+.form-error{color:var(--red);font-size:0.84rem;margin-top:8px;display:none;}
+.form-error.is-visible{display:block;}
+
+.booking-side{position:sticky;top:100px;}
+.booking-note{margin-top:24px;font-size:0.88rem;color:var(--ink-soft);background:var(--teal-soft);border-radius:var(--r-md);padding:18px 20px;}
+.booking-note strong{color:var(--teal);display:block;margin-bottom:4px;}
+
+#booking-success{display:none;}
+#booking-success.is-visible{display:block;}
+.success-banner{display:flex;align-items:center;gap:10px;color:var(--teal);font-weight:700;margin-bottom:16px;}
+.success-banner svg{width:22px;height:22px;}
+
+/* ============ HOURS ============ */
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.hours-table{width:100%;border-collapse:collapse;}
+.hours-table tr{border-bottom:1px solid var(--line-1);}
+.hours-table td{padding:16px 0;font-size:1rem;}
+.hours-table td:first-child{font-weight:600;}
+.hours-table td:last-child{text-align:right;color:var(--ink-soft);font-family:var(--font-mono);font-size:0.92rem;}
+.open-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;font-family:var(--font-mono);font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;}
+.open-badge.is-open{background:var(--teal-soft);color:var(--teal);}
+.open-badge.is-closed{background:#F3E1DE;color:var(--red);}
+.open-badge .live-dot{background:currentColor;}
+.hours-card{background:var(--paper);border-radius:var(--r-lg);padding:36px;}
+.hours-card p{color:var(--ink-soft);margin-top:14px;font-size:0.95rem;}
+
+/* ============ FEES ============ */
+.fees-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.fees-copy p{color:var(--ink-soft);font-size:1.02rem;margin-top:14px;}
+.never-list{margin-top:24px;display:flex;flex-direction:column;gap:14px;}
+.never-list li{display:flex;align-items:flex-start;gap:10px;font-size:0.94rem;color:var(--ink-soft);}
+.never-list svg{width:18px;height:18px;color:var(--teal);flex-shrink:0;margin-top:2px;}
+.receipt{background:var(--paper);border-radius:var(--r-lg);padding:clamp(24px,3vw,36px);box-shadow:var(--shadow-sm);}
+.receipt-row{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 0;border-bottom:1px dashed var(--line-2);gap:16px;}
+.receipt-row:last-of-type{border-bottom:none;}
+.receipt-row h4{font-size:1rem;margin:0;}
+.receipt-row p{margin:4px 0 0;font-size:0.85rem;color:var(--ink-soft);}
+.receipt-row .price{font-family:var(--font-mono);font-weight:700;font-size:1.05rem;white-space:nowrap;}
+.receipt-foot{margin-top:18px;font-size:0.8rem;color:var(--ink-soft);}
+
+/* ============ FOOTER ============ */
+footer{background:var(--ink);color:rgba(255,255,255,0.78);padding-block:64px 32px;}
+.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;}
+.footer-brand .brand-text strong{color:var(--white);}
+.footer-brand p{margin-top:16px;font-size:0.9rem;max-width:280px;color:rgba(255,255,255,0.6);}
+.footer-col h4{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em;font-size:0.74rem;color:rgba(255,255,255,0.5);margin-bottom:16px;}
+.footer-col ul{display:flex;flex-direction:column;gap:10px;}
+.footer-col a, .footer-col li{font-size:0.92rem;}
+.footer-col a:hover{color:var(--amber);}
+.social-row{display:flex;gap:12px;margin-top:18px;}
+.social-row a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;}
+.social-row a:hover{background:rgba(255,255,255,0.1);}
+.social-row svg{width:18px;height:18px;}
+.footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:0.82rem;color:rgba(255,255,255,0.5);}
+.footer-bottom a{margin-left:18px;}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 980px){
+  .hero-grid{grid-template-columns:1fr;}
+  .pillars{grid-template-columns:1fr;}
+  .trust-grid{grid-template-columns:repeat(2,1fr);}
+  .flow-track{flex-direction:column;}
+  .flow-step{border-right:none !important;padding:0 0 28px 22px;border-left:1px dashed var(--line-2);margin-left:8px;}
+  .flow-step:last-child{padding-bottom:0;}
+  .team-grid{grid-template-columns:repeat(2,1fr);}
+  .booking-grid{grid-template-columns:1fr;}
+  .booking-side{position:static;}
+  .hours-grid,.fees-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width: 760px){
+  .nav-links{display:none;}
+  .nav-cta .btn{display:none;}
+  .nav-toggle{display:block;}
+  .field-grid{grid-template-columns:1fr;}
+  .trust-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;gap:32px;}
+  section{padding-block:56px;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<svg style="display:none">
+<defs>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 1 1 12 0c0 3.2 1 5 2 6.5H4C5 15 6 13.2 6 10Z"/><path d="M9.5 19.5a2.5 2.5 0 0 0 5 0"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M8 14h2M14 14h2M8 17.5h2"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4.2"/><path d="M11 11.2 19.5 2.7M16.5 5.2 19 7.7M14 7.7l2 2"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 1 5.6 5.6L9.5 22.5 5 18l10.5-10.5a4 4 0 0 1 0-1Z"/><path d="M5 18 3 21"/></symbol>
+<symbol id="i-handshake" viewBox="0 0 24 24"><path d="M3 11l4-3 4 2.5L15 8l6 3"/><path d="M7 8.5 11 12l-2 2-4-2.5M17 11l-3.5 3.5a2 2 0 0 1-2.8 0L9 12.8"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7"/></symbol>
+<symbol id="i-return" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="17" rx="2"/><path d="M9 4.5V3.2a1.2 1.2 0 0 1 1.2-1.2h3.6A1.2 1.2 0 0 1 15 3.2v1.3"/><path d="M8.5 12.5 11 15l5-5.5"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h6M5 7 2.5 13a2.7 2.7 0 0 0 5 0L5 7Zm13 0L15.5 13a2.7 2.7 0 0 0 5 0L18 7Z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 20 6v6c0 5-3.5 8-8 9.5C7.5 20 4 17 4 12V6l8-3.5Z"/><path d="M9 12l2.2 2.2L15.5 9.5"/></symbol>
+<symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.6 1.8-2.4 3-2.4s2.4.8 3 2.4M14.5 9.5h4M14.5 13.5h4"/></symbol>
+<symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3v6.6M12 14.4V21M5 7.5l5 3.4M19 7.5l-5 3.4M5 16.5l5-3.4M19 16.5l-5-3.4"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5Z"/></symbol>
+<symbol id="i-fb" viewBox="0 0 24 24"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9c0-.9.3-1.5 1.7-1.5h1.3V4.8c-.6-.1-1.6-.2-2.7-.2-2.7 0-4 1.6-4 4.2V11H7.5v3H10v7h3.5Z" stroke-width="0" fill="currentColor"/></symbol>
+<symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.4 7-11.5A7 7 0 0 0 5 9.5C5 14.6 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M6 3.5h3l1.5 4-2 1.7a13 13 0 0 0 6.3 6.3l1.7-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5C11 19 4 12 3.5 5A1.5 1.5 0 0 1 5 3.5h1Z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+</defs>
+</svg>
+
+<header id="site-header">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">PP</span>
+      <span class="brand-text"><strong>Papapick</strong><span>Trusted car care</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#philosophy" data-nav>Philosophy</a>
+      <a href="#flow" data-nav>How it works</a>
+      <a href="#team" data-nav>Team</a>
+      <a href="#booking" data-nav>Booking</a>
+      <a href="#hours" data-nav>Hours</a>
+      <a href="#fees" data-nav>Fees</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#booking" class="btn btn-primary">Book a Pickup</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="icon"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-close" id="mobile-close" aria-label="Close menu">
+    <svg class="icon" style="color:#fff"><use href="#i-close"/></svg>
+  </button>
+  <a href="#philosophy" data-nav>Philosophy</a>
+  <a href="#flow" data-nav>How it works</a>
+  <a href="#team" data-nav>Team</a>
+  <a href="#booking" data-nav>Booking</a>
+  <a href="#hours" data-nav>Hours</a>
+  <a href="#fees" data-nav>Fees</a>
+  <a href="#booking" class="btn btn-primary">Book a Pickup</a>
+</div>
+
+<main id="main">
+
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">A family habit, now a service</p>
+      <h1>We pick up your car the way Papa used to.</h1>
+      <p class="lead">Papapick runs the maintenance errand for you — the reminder, the pickup, the bargaining at the garage, and the drop-off — so your car gets the same care it did before you were the one paying for it.</p>
+      <div class="hero-ctas">
+        <a href="#booking" class="btn btn-primary">Book a Pickup<svg class="icon" style="width:18px;height:18px"><use href="#i-arrow"/></svg></a>
+        <a href="#flow" class="btn btn-outline-dark">See how it works</a>
+      </div>
+      <ul class="trust-strip">
+        <li><svg><use href="#i-shield"/></svg>100% insured pickup</li>
+        <li><svg><use href="#i-check"/></svg>Vetted garages only</li>
+        <li><svg><use href="#i-chat"/></svg>Live status on LINE</li>
+      </ul>
+    </div>
+
+    <div class="docket reveal" id="hero-docket">
+      <div class="docket-top">
+        <div>
+          <p class="docket-label">Service docket</p>
+          <p class="docket-no" id="hero-docket-no">PP-240617-0142</p>
+        </div>
+        <div class="docket-stamp">Papapick<br>Trusted care</div>
+      </div>
+      <div class="docket-divider"></div>
+      <div class="docket-row"><span>Car</span><span>Toyota Yaris Ativ</span></div>
+      <div class="docket-row"><span>Plate</span><span>1กข 2345 · Bangkok</span></div>
+      <div class="docket-row"><span>Service</span><span>Routine maintenance</span></div>
+      <div class="status-track" aria-label="Service status">
+        <div class="status-step is-done"><span class="status-dot"></span><span class="status-label">Received</span></div>
+        <div class="status-step is-current"><span class="status-dot"></span><span class="status-label">At garage</span></div>
+        <div class="status-step"><span class="status-dot"></span><span class="status-label">Returning</span></div>
+      </div>
+      <div class="docket-caption"><span class="live-dot"></span> Synced live — updates sent straight to your LINE.</div>
+    </div>
+  </div>
+</section>
+
+<section id="philosophy">
+  <div class="container">
+    <div class="philosophy-copy reveal">
+      <p class="eyebrow">Why we exist</p>
+      <h2>Every car needs a Papa. Most of us don't have time to be one.</h2>
+      <p>There used to be someone in the house who just took care of it — who knew when the oil was due, which mechanic to trust, and exactly how much a job should cost. You handed over the keys after school and stopped thinking about it.</p>
+      <p>Papapick is that person, as a service. We notice when your car is due, take it where it should go, stand over the job so nobody pads the bill, and bring it back clean — usually before you've finished your coffee.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-pin"/></svg></div>
+        <h3>We know the garage</h3>
+        <p>Every workshop on our list has been checked out first. Your car only goes where we'd send our own.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-handshake"/></svg></div>
+        <h3>We bargain like it's ours</h3>
+        <p>We sit through the quote, question every line item, and push back on anything that smells like an upsell.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-shield"/></svg></div>
+        <h3>We carry the risk</h3>
+        <p>Every trip is insured. If something goes wrong while your car is with us, it's on us — not on you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust-band">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">How we stay accountable</p>
+      <h2>Standards, not improvisation.</h2>
+      <p>“100% safety” isn't a slogan here — it's a checklist, a contract, and a policy number.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-clipboard"/></svg></div>
+        <h3>Written standards</h3>
+        <p>Every driver follows the same checklist, from pickup photos to garage sign-off. Nothing is left to memory.</p>
+      </div>
+      <div class="trust-card reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-scale"/></svg></div>
+        <h3>In-house legal team</h3>
+        <p>Contracts, claims, and disputes go through our own legal team — not a call-centre script.</p>
+      </div>
+      <div class="trust-card reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-shield"/></svg></div>
+        <h3>Insured, every trip</h3>
+        <p>Each pickup is covered. If the unforeseeable happens once, we take full responsibility — no arguments.</p>
+      </div>
+      <div class="trust-card reveal">
+        <div class="pillar-icon"><svg class="icon"><use href="#i-id"/></svg></div>
+        <h3>Vetted drivers</h3>
+        <p>Every driver is background-checked and trained on our standard before they're handed a customer's keys.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">How we work</p>
+      <h2>From the reminder to the return drive, in seven steps.</h2>
+      <p>This is the same loop for almost every client, twice a month: we notice, we book, we go get it, we bargain, and we bring it home.</p>
+    </div>
+    <div class="flow-track">
+      <div class="flow-step reveal">
+        <p class="flow-num">01</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-bell"/></svg></div>
+        <h3>We notice</h3>
+        <p>Most cars need this twice a month. We track the schedule and remind you before the dashboard light does.</p>
+      </div>
+      <div class="flow-step reveal">
+        <p class="flow-num">02</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-calendar"/></svg></div>
+        <h3>You book</h3>
+        <p>Pick a date, time, and location on the website. Slots update in real time — no phone tag.</p>
+      </div>
+      <div class="flow-step reveal">
+        <p class="flow-num">03</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-key"/></svg></div>
+        <h3>We pick up</h3>
+        <p>A vetted driver collects your car at the agreed time, logs the handover, and takes condition photos.</p>
+      </div>
+      <div class="flow-step reveal">
+        <p class="flow-num">04</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-wrench"/></svg></div>
+        <h3>We deliver it</h3>
+        <p>Your car goes straight to a garage from our vetted list — or yours, if you'd rather.</p>
+      </div>
+      <div class="flow-step reveal">
+        <p class="flow-num">05</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-handshake"/></svg></div>
+        <h3>We bargain</h3>
+        <p>Our staff stays for the diagnosis and negotiates the quote before any work starts.</p>
+      </div>
+      <div class="flow-step reveal">
+        <p class="flow-num">06</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-check"/></svg></div>
+        <h3>You approve</h3>
+        <p>We send the agreed price to your LINE chat. Work only begins after you say go.</p>
+      </div>
+      <div class="flow-step reveal">
+        <p class="flow-num">07</p>
+        <div class="flow-icon"><svg class="icon"><use href="#i-return"/></svg></div>
+        <h3>We bring it back</h3>
+        <p>Your car is returned, on time, to the place you chose — with the receipt waiting in your chat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Who shows up</p>
+      <h2>Five roles, one standard.</h2>
+      <p>Swap these in for your real team's names and photos — each card already carries what the role is accountable for.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar"><svg class="icon"><use href="#i-wheel"/></svg></div>
+        <h3>Your Name Here</h3>
+        <span class="team-role">Founder &amp; head papa</span>
+        <p>Sets the standard every driver follows and signs off on every garage we work with.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar"><svg class="icon"><use href="#i-clipboard"/></svg></div>
+        <h3>Your Name Here</h3>
+        <span class="team-role">Operations lead</span>
+        <p>Plans pickups, tracks every car in real time, and keeps the LINE updates on schedule.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar"><svg class="icon"><use href="#i-handshake"/></svg></div>
+        <h3>Your Name Here</h3>
+        <span class="team-role">Garage relations</span>
+        <p>Knows the going rate for every job and negotiates it down before work begins.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar"><svg class="icon"><use href="#i-scale"/></svg></div>
+        <h3>Your Name Here</h3>
+        <span class="team-role">Legal &amp; insurance</span>
+        <p>Handles the paperwork, the policy, and the claim — so you never have to.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar"><svg class="icon"><use href="#i-key"/></svg></div>
+        <h3>Your Name Here</h3>
+        <span class="team-role">Driver team</span>
+        <p>Background-checked, trained on our checklist, and trusted with the keys.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Book a pickup</p>
+      <h2>Reserve your slot. Availability updates as you pick a date.</h2>
+      <p>Fill this in once — we'll confirm by LINE within the hour and track the rest of the job from there.</p>
+    </div>
+
+    <div class="booking-grid">
+      <div class="booking-panel reveal">
+        <form id="booking-form" novalidate>
+          <div class="field-grid">
+            <div class="field">
+              <label for="f-name">Name – Surname</label>
+              <input type="text" id="f-name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telephone</label>
+              <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="08X-XXX-XXXX" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label id="contact-label" for="f-contact">Send my receipt via</label>
+            <div class="seg-control" role="group" aria-label="Receipt delivery method">
+              <button type="button" class="seg-btn is-active" data-method="line">LINE</button>
+              <button type="button" class="seg-btn" data-method="email">Email</button>
+            </div>
+            <input type="text" id="f-contact" name="contact" placeholder="Your LINE ID" required>
+          </div>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="f-plate">Car plate &amp; province</label>
+              <input type="text" id="f-plate" name="plate" placeholder="e.g. 1กข 2345 Bangkok" required>
+            </div>
+            <div class="field">
+              <label for="f-car">Car brand &amp; model</label>
+              <input type="text" id="f-car" name="car" placeholder="e.g. Toyota Yaris Ativ" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-service">Service needed</label>
+            <select id="f-service" name="service" required>
+              <option value="">Choose one…</option>
+              <option>Routine maintenance (PM / check-up)</option>
+              <option>Tyres &amp; alignment</option>
+              <option>Battery</option>
+              <option>Bodywork or insurance claim</option>
+              <option>Other — I'll describe it in notes</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="f-pickup">Pickup location</label>
+            <input type="text" id="f-pickup" name="pickup" placeholder="Condo, office, or home address" required>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="f-same" checked>
+            <label for="f-same" style="margin:0;font-weight:500;">Return the car to the same place</label>
+          </div>
+          <div class="field" id="dropoff-field" style="display:none;">
+            <label for="f-dropoff">Drop-off location</label>
+            <input type="text" id="f-dropoff" name="dropoff" placeholder="Where should we bring it back?">
+          </div>
+
+          <div class="field">
+            <label for="f-date">Preferred date</label>
+            <input type="date" id="f-date" name="date" required>
+          </div>
+
+          <div class="slots-block field">
+            <p class="slots-heading"><span class="live-dot"></span> Real-time availability</p>
+            <div id="slots-container"><p class="slots-status">Choose a date to check open pickup slots.</p></div>
+          </div>
+
+          <div class="field">
+            <label for="f-notes">Notes (optional)</label>
+            <textarea id="f-notes" name="notes" placeholder="Anything our driver or the garage should know"></textarea>
+          </div>
+
+          <p class="form-error" id="form-error">Please fill in the required fields and choose an available time slot.</p>
+          <button type="submit" class="btn btn-primary btn-block">Reserve this slot</button>
+        </form>
+
+        <div id="booking-success">
+          <p class="success-banner"><svg><use href="#i-check"/></svg> Slot reserved</p>
+          <div class="docket" style="box-shadow:none;">
+            <div class="docket-top">
+              <div>
+                <p class="docket-label">Service docket</p>
+                <p class="docket-no" id="success-ref">PP-000000-0000</p>
+              </div>
+              <div class="docket-stamp">Papapick<br>Trusted care</div>
+            </div>
+            <div class="docket-divider"></div>
+            <div class="docket-row"><span>Name</span><span id="success-name">—</span></div>
+            <div class="docket-row"><span>Car</span><span id="success-car">—</span></div>
+            <div class="docket-row"><span>Pickup</span><span id="success-when">—</span></div>
+            <div class="docket-row"><span>Receipt via</span><span id="success-contact">—</span></div>
+          </div>
+          <div class="booking-note">
+            <strong>One more step</strong>
+            Add Papapick on LINE so we can send live status updates from pickup to drop-off.
+          </div>
+          <a href="https://line.me/R/ti/p/@papapick" target="_blank" rel="noopener" class="btn btn-outline-dark btn-block" style="margin-top:14px;"><svg><use href="#i-chat"/></svg> Add Papapick on LINE</a>
+          <button type="button" class="btn btn-outline-dark btn-block" id="book-again" style="margin-top:10px;border-color:var(--line-2);">Make another booking</button>
+        </div>
+      </div>
+
+      <div class="booking-side reveal">
+        <div class="docket">
+          <div class="docket-top">
+            <div>
+              <p class="docket-label">What happens next</p>
+              <p class="docket-no">After you reserve</p>
+            </div>
+          </div>
+          <div class="docket-divider"></div>
+          <div class="docket-row"><span>1.</span><span>We confirm by LINE within the hour</span></div>
+          <div class="docket-row"><span>2.</span><span>Driver collects at your chosen time</span></div>
+          <div class="docket-row"><span>3.</span><span>Live status sent as work progresses</span></div>
+          <div class="docket-row"><span>4.</span><span>Receipt &amp; car returned on schedule</span></div>
+        </div>
+        <div class="booking-note">
+          <strong>Why we ask for LINE or email</strong>
+          That's where your receipt, the garage's quote, and every status update get sent — nothing important is left to a phone call you might miss.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hours">
+  <div class="container hours-grid">
+    <div class="reveal">
+      <p class="eyebrow">When we work</p>
+      <h2 style="font-size:clamp(1.7rem,3.4vw,2.4rem);margin-top:14px;">Working hours</h2>
+      <p style="margin-top:14px;color:var(--ink-soft);">All times are Bangkok time. The badge below updates on its own.</p>
+      <div style="margin-top:20px;"><span class="open-badge" id="open-badge"><span class="live-dot"></span>Checking…</span></div>
+      <table class="hours-table" style="margin-top:28px;">
+        <tr><td>Monday – Saturday</td><td>08:00 – 19:00</td></tr>
+        <tr><td>Last pickup request</td><td>17:00</td></tr>
+        <tr><td>Sunday &amp; public holidays</td><td>By LINE appointment only</td></tr>
+      </table>
+    </div>
+    <div class="hours-card reveal">
+      <p class="eyebrow">Good to know</p>
+      <h3 style="font-size:1.3rem;margin-top:10px;">Most clients book us twice a month</h3>
+      <p>That's roughly how often a daily-driven car needs a check-up or top-up. We'll remind you before each one is due, so booking becomes a habit rather than a chore.</p>
+      <p>Need something outside these hours — an early-morning office drop-off, say? Message us on LINE and we'll see what we can arrange.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fees">
+  <div class="container fees-grid">
+    <div class="fees-copy reveal">
+      <p class="eyebrow">How we charge</p>
+      <h2 style="font-size:clamp(1.7rem,3.4vw,2.4rem);margin-top:14px;">One flat fee. No surprises.</h2>
+      <p>You only ever pay two things: the garage's actual invoice — which we negotiate down and show you before any work starts — and our flat pickup-and-return fee. No commission added on top of the garage's bill.</p>
+      <ul class="never-list">
+        <li><svg><use href="#i-check"/></svg> No charge for bargaining the price on your behalf</li>
+        <li><svg><use href="#i-check"/></svg> No commission added to the garage's invoice</li>
+        <li><svg><use href="#i-check"/></svg> No charge for status updates sent to your LINE</li>
+        <li><svg><use href="#i-check"/></svg> No charge if we need to reschedule on our side</li>
+      </ul>
+    </div>
+    <div class="receipt reveal">
+      <div class="receipt-row">
+        <div><h4>Single pickup &amp; return</h4><p>One round trip, including on-site bargaining and LINE updates.</p></div>
+        <div class="price">฿250 / trip</div>
+      </div>
+      <div class="receipt-row">
+        <div><h4>Twice-monthly plan</h4><p>Two round trips a month, priority slot booking, small discount vs. paying per trip.</p></div>
+        <div class="price">฿450 / month</div>
+      </div>
+      <div class="receipt-row">
+        <div><h4>Beyond city radius</h4><p>Outside a 15&nbsp;km radius from our base.</p></div>
+        <div class="price">฿15 / km</div>
+      </div>
+      <div class="receipt-row">
+        <div><h4>Extended wait at garage</h4><p>Only on major repairs running past 2 hours.</p></div>
+        <div class="price">฿100 / hr</div>
+      </div>
+      <p class="receipt-foot">Rates shown are a starting example — confirm your own pricing before publishing this page.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="#top" class="brand">
+        <span class="brand-mark">PP</span>
+        <span class="brand-text"><strong>Papapick</strong><span>Trusted car care</span></span>
+      </a>
+      <p>We pick up your car, take it where it should go, and bring it back — insured, standardised, and tracked live on LINE.</p>
+      <div class="social-row">
+        <a href="https://line.me/R/ti/p/@papapick" target="_blank" rel="noopener" aria-label="Papapick on LINE"><svg class="icon" style="width:18px;height:18px"><use href="#i-chat"/></svg></a>
+        <a href="#" aria-label="Papapick on Facebook"><svg class="icon" style="width:18px;height:18px"><use href="#i-fb"/></svg></a>
+        <a href="#" aria-label="Papapick on Instagram"><svg class="icon" style="width:18px;height:18px"><use href="#i-ig"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#flow">How it works</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#booking">Booking</a></li>
+        <li><a href="#fees">Fees</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li style="display:flex;gap:8px;align-items:center;"><svg class="icon" style="width:16px;height:16px"><use href="#i-phone"/></svg> 02-XXX-XXXX</li>
+        <li style="display:flex;gap:8px;align-items:center;"><svg class="icon" style="width:16px;height:16px"><use href="#i-mail"/></svg> hello@papapick.co</li>
+        <li style="display:flex;gap:8px;align-items:center;"><svg class="icon" style="width:16px;height:16px"><use href="#i-chat"/></svg> @papapick</li>
+        <li style="display:flex;gap:8px;align-items:center;"><svg class="icon" style="width:16px;height:16px"><use href="#i-pin"/></svg> Bangkok, Thailand</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <ul>
+        <li>Mon – Sat, 08:00–19:00</li>
+        <li>Sunday: by appointment</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span id="year-span">© 2026 Papapick.</span>
+    <span><a href="#">Privacy</a><a href="#">Terms</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Header scroll shadow ---------- */
+  var header = document.getElementById('site-header');
+  function onScroll(){
+    if(window.scrollY > 8){ header.classList.add('is-scrolled'); }
+    else { header.classList.remove('is-scrolled'); }
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  var navToggle = document.getElementById('nav-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var mobileClose = document.getElementById('mobile-close');
+  function openMenu(){
+    mobileMenu.classList.add('is-open');
+    document.body.classList.add('menu-open');
+    navToggle.setAttribute('aria-expanded','true');
+  }
+  function closeMenu(){
+    mobileMenu.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+    navToggle.setAttribute('aria-expanded','false');
+  }
+  navToggle.addEventListener('click', openMenu);
+  mobileClose.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenu(); });
+
+  /* ---------- Scroll-spy nav highlight ---------- */
+  var navLinks = document.querySelectorAll('a[data-nav]');
+  var sections = Array.prototype.map.call(navLinks, function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if('IntersectionObserver' in window && sections.length){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var id = '#' + entry.target.id;
+          navLinks.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === id); });
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px'});
+    sections.forEach(function(s){ spy.observe(s); });
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); ro.unobserve(entry.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---------- Hero docket number (today's date) ---------- */
+  var d = new Date();
+  var yy = String(d.getFullYear()).slice(2);
+  var mm = String(d.getMonth()+1).padStart(2,'0');
+  var dd = String(d.getDate()).padStart(2,'0');
+  var rand = String(Math.floor(Math.random()*9000)+1000);
+  var heroNo = document.getElementById('hero-docket-no');
+  if(heroNo) heroNo.textContent = 'PP-' + yy + mm + dd + '-' + rand;
+
+  /* ---------- Bangkok-time open/closed badge ---------- */
+  function bangkokNow(){
+    var now = new Date();
+    var utcMs = now.getTime() + now.getTimezoneOffset()*60000;
+    return new Date(utcMs + 7*3600000);
+  }
+  function updateBadge(){
+    var bkk = bangkokNow();
+    var day = bkk.getDay();
+    var hour = bkk.getHours() + bkk.getMinutes()/60;
+    var open = (day >= 1 && day <= 6) && (hour >= 8 && hour < 19);
+    var badge = document.getElementById('open-badge');
+    if(!badge) return;
+    badge.innerHTML = '<span class="live-dot"></span>' + (open ? 'Open now' : 'Closed now');
+    badge.classList.toggle('is-open', open);
+    badge.classList.toggle('is-closed', !open);
+  }
+  updateBadge();
+  setInterval(updateBadge, 60000);
+
+  /* ---------- Footer year ---------- */
+  var yearSpan = document.getElementById('year-span');
+  if(yearSpan) yearSpan.textContent = '© ' + new Date().getFullYear() + ' Papapick.';
+
+  /* ---------- Receipt-method toggle ---------- */
+  var segBtns = document.querySelectorAll('.seg-btn');
+  var contactInput = document.getElementById('f-contact');
+  var contactLabel = document.getElementById('contact-label');
+  segBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      segBtns.forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var method = btn.getAttribute('data-method');
+      if(method === 'email'){
+        contactInput.type = 'email';
+        contactInput.placeholder = 'you@email.com';
+        contactLabel.textContent = 'Send my receipt via email';
+      } else {
+        contactInput.type = 'text';
+        contactInput.placeholder = 'Your LINE ID';
+        contactLabel.textContent = 'Send my receipt via LINE';
+      }
+    });
+  });
+
+  /* ---------- Same drop-off toggle ---------- */
+  var sameCheckbox = document.getElementById('f-same');
+  var dropoffField = document.getElementById('dropoff-field');
+  sameCheckbox.addEventListener('change', function(){
+    dropoffField.style.display = sameCheckbox.checked ? 'none' : 'block';
+    document.getElementById('f-dropoff').required = !sameCheckbox.checked;
+  });
+
+  /* ---------- Real-time slot checker (deterministic per date, simulated) ---------- */
+  var dateInput = document.getElementById('f-date');
+  var slotsContainer = document.getElementById('slots-container');
+  var selectedSlot = null;
+  var todayStr = new Date().toISOString().slice(0,10);
+  dateInput.min = todayStr;
+
+  function hashStr(s){
+    var h = 0;
+    for(var i=0;i<s.length;i++){ h = (h<<5) - h + s.charCodeAt(i); h |= 0; }
+    return Math.abs(h);
+  }
+  function getAvailability(dateStr){
+    var d = new Date(dateStr + 'T00:00:00');
+    var day = d.getDay();
+    if(day === 0) return {closed:true};
+    var bands = [
+      {key:'am', label:'09:00 – 11:00'},
+      {key:'mid', label:'13:00 – 15:00'},
+      {key:'pm', label:'16:00 – 18:00'}
+    ];
+    var seed = hashStr(dateStr);
+    var slots = bands.map(function(b, i){
+      var cap = 4;
+      var used = (seed >> (i*3)) % (cap+1);
+      return {key:b.key, label:b.label, cap:cap, left:Math.max(cap-used,0)};
+    });
+    return {closed:false, slots:slots};
+  }
+  function renderSlots(data){
+    selectedSlot = null;
+    if(data.closed){
+      slotsContainer.innerHTML = '<p class="slots-status">We\'re closed that day — message us on LINE if you need an exception.</p>';
+      return;
+    }
+    var html = '<div class="slots-list">';
+    data.slots.forEach(function(s){
+      var full = s.left <= 0;
+      html += '<button type="button" class="slot-btn" data-key="'+s.key+'" data-label="'+s.label+'" '+(full?'disabled':'')+'>' +
+        s.label + '<span class="cap">' + (full ? 'Full' : s.left + ' of ' + s.cap + ' left') + '</span></button>';
+    });
+    html += '</div>';
+    slotsContainer.innerHTML = html;
+    slotsContainer.querySelectorAll('.slot-btn:not(:disabled)').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        slotsContainer.querySelectorAll('.slot-btn').forEach(function(b){ b.classList.remove('is-selected'); });
+        btn.classList.add('is-selected');
+        selectedSlot = {key:btn.getAttribute('data-key'), label:btn.getAttribute('data-label')};
+      });
+    });
+  }
+  dateInput.addEventListener('change', function(){
+    if(!dateInput.value){ return; }
+    slotsContainer.innerHTML = '<p class="slots-status">Checking availability…</p>';
+    var dateStr = dateInput.value;
+    setTimeout(function(){
+      renderSlots(getAvailability(dateStr));
+    }, 450);
+  });
+
+  /* ---------- Booking form submit ---------- */
+  var form = document.getElementById('booking-form');
+  var formError = document.getElementById('form-error');
+  var successPanel = document.getElementById('booking-success');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var valid = form.checkValidity();
+    if(!valid || !selectedSlot){
+      formError.classList.add('is-visible');
+      formError.textContent = 'Please fill in the required fields and choose an available time slot.';
+      form.reportValidity();
+      return;
+    }
+    formError.classList.remove('is-visible');
+
+    var contactMethod = document.querySelector('.seg-btn.is-active').getAttribute('data-method');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var payload = {
+      name: document.getElementById('f-name').value.trim(),
+      phone: document.getElementById('f-phone').value.trim(),
+      contactMethod: contactMethod,
+      contact: document.getElementById('f-contact').value.trim(),
+      plate: document.getElementById('f-plate').value.trim(),
+      car: document.getElementById('f-car').value.trim(),
+      service: document.getElementById('f-service').value,
+      pickup: document.getElementById('f-pickup').value.trim(),
+      sameDropoff: sameCheckbox.checked,
+      dropoff: document.getElementById('f-dropoff').value.trim(),
+      date: dateInput.value,
+      slot: selectedSlot.label,
+      notes: document.getElementById('f-notes').value.trim()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Reserving...';
+
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    })
+    .then(function(response){
+      return response.json().then(function(data){
+        if(!response.ok || !data.ok){
+          throw new Error(data.error || 'Unable to reserve this slot right now.');
+        }
+        return data;
+      });
+    })
+    .then(function(data){
+      var name = payload.name;
+      var car = payload.car;
+      var contactVal = payload.contact;
+      var ref = data.reference;
+      var dateVal = dateInput.value;
+      var d2 = new Date(dateVal + 'T00:00:00');
+      var dateLabel = d2.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+
+      document.getElementById('success-ref').textContent = ref;
+      document.getElementById('success-name').textContent = name;
+      document.getElementById('success-car').textContent = car;
+      document.getElementById('success-when').textContent = dateLabel + ' · ' + selectedSlot.label;
+      document.getElementById('success-contact').textContent = (contactMethod === 'email' ? 'Email — ' : 'LINE — ') + contactVal;
+
+      form.style.display = 'none';
+      successPanel.classList.add('is-visible');
+      successPanel.scrollIntoView({behavior:'smooth', block:'start'});
+    })
+    .catch(function(error){
+      formError.textContent = error.message || 'Unable to reserve this slot right now.';
+      formError.classList.add('is-visible');
+    })
+    .finally(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Reserve this slot';
+    });
+  });
+
+  document.getElementById('book-again').addEventListener('click', function(){
+    form.reset();
+    selectedSlot = null;
+    slotsContainer.innerHTML = '<p class="slots-status">Choose a date to check open pickup slots.</p>';
+    dropoffField.style.display = 'none';
+    segBtns.forEach(function(b){ b.classList.remove('is-active'); });
+    document.querySelector('.seg-btn[data-method="line"]').classList.add('is-active');
+    contactInput.type = 'text';
+    contactInput.placeholder = 'Your LINE ID';
+    successPanel.classList.remove('is-visible');
+    form.style.display = 'block';
+    form.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+})();
+</script>
+</body>
+</html>
