@@ -19,7 +19,8 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.pdf': 'application/pdf'
 };
 
 function sendJson(res, statusCode, payload) {
