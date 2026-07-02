@@ -144,9 +144,9 @@ p{margin:0;}
   .promo-bar{font-size:0.76rem;padding-left:12px;}
 }
 </style>
-<script src="https://api.sphere.gistda.or.th/map/js/?key=test2022" type="text/javascript"></script>
+<script type="text/javascript" src="https://api.sphere.gistda.or.th/map/?key=F37900F5388744B088C1ABEB922D945A"></script>
 </head>
-<body onload="initSphereMap()">
+<body onload="init()">
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -625,7 +625,7 @@ var RATE = 6;
 var calcBase = 550;
 
 /* ── Init map — called by body onload ── */
-function initSphereMap(){
+function init(){
   sphereMap = new sphere.Map({
     placeholder: document.getElementById('calc-map'),
     zoom: 11,
