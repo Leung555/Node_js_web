@@ -610,43 +610,40 @@ p{margin:0;}
 </style>
 
 <!-- GISTDA Sphere JS -->
-<script src="https://api.sphere.gistda.or.th/map/js/?key=F37900F5388744B088C1ABEB922D945A"></script>
 <script>
-/* ── Sphere Fare Calculator ───────────────────── */
-var SPHERE_KEY = 'F37900F5388744B088C1ABEB922D945A';
-var FREE_KM = 15;
-var RATE = 6;
-var calcBase = 550;
 var sphereMap = null;
 var pickupMarker = null;
 var garageMarker = null;
 var pickupLoc = null;
 var garageLoc = null;
 
-// Init Sphere map on load
-window.addEventListener('load', function(){
-  // Small delay so the container is fully painted before Sphere measures it
-  setTimeout(function(){
-    sphereMap = new sphere.Map({
-      placeholder: document.getElementById('calc-map'),
-      zoom: 11,
-      location: { lon: 100.5018, lat: 13.7563 },
-      ui: sphere.UiComponent.None,
-      language: 'th'
-    });
-    sphereMap.Layers.setBase(sphere.Layers.STREETS);
-    // Give route a dummy placeholder div so it doesn't need one
-    var routeEl = document.createElement('div');
-    routeEl.style.display = 'none';
-    document.body.appendChild(routeEl);
-    sphereMap.Route.placeholder(routeEl);
-    sphereMap.Route.auto(true);
-    // Resize once map is ready
-    sphereMap.Event.bind(sphere.EventName.Ready, function(){
-      sphereMap.resize();
-    });
-  }, 300);
-});
+// Define init function BEFORE loading Sphere so it's ready when Sphere calls it
+function initSphereMap(){
+  sphereMap = new sphere.Map({
+    placeholder: document.getElementById('calc-map'),
+    zoom: 11,
+    location: { lon: 100.5018, lat: 13.7563 },
+    ui: sphere.UiComponent.None,
+    language: 'th'
+  });
+  sphereMap.Layers.setBase(sphere.Layers.STREETS);
+  // Route placeholder
+  var routeEl = document.createElement('div');
+  routeEl.style.display = 'none';
+  document.body.appendChild(routeEl);
+  sphereMap.Route.placeholder(routeEl);
+  sphereMap.Route.auto(true);
+  sphereMap.Event.bind(sphere.EventName.Ready, function(){
+    sphereMap.resize();
+  });
+}
+</script>
+<script src="https://api.sphere.gistda.or.th/map/js/?key=F37900F5388744B088C1ABEB922D945A&callback=initSphereMap"></script>
+<script>
+/* ── Fare Calculator ── */
+var FREE_KM = 15;
+var RATE = 6;
+var calcBase = 550;
 
 // ── Service selector ──────────────────────────
 function selectService(el, base){
