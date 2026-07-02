@@ -552,8 +552,11 @@ p{margin:0;}
         <div style="padding:28px 32px 36px;border-left:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:14px;">
 
           <!-- Sphere map -->
-          <div id="calc-map" style="width:100%;height:230px;border-radius:14px;flex-shrink:0;position:relative;">
-            <!-- map mounts here -->
+          <div id="calc-map" style="width:100%;height:230px;border-radius:14px;flex-shrink:0;overflow:hidden;">
+            <iframe id="calc-map-iframe"
+              src="https://api.sphere.gistda.or.th/services/snippet/embed?lon=100.5018&lat=13.7563&zoom=11&locale=th&map=sphere_streets&key=F37900F5388744B088C1ABEB922D945A"
+              width="100%" height="230" style="border:none;display:block;" loading="lazy">
+            </iframe>
           </div>
 
           <!-- Fare breakdown -->
@@ -624,25 +627,24 @@ var FREE_KM = 15;
 var RATE = 6;
 var calcBase = 550;
 
-/* ── Init map — called by body onload ── */
+/* ── Init — called by body onload ── */
 function init(){
+  // Create a hidden map div for Sphere Search & Route API access
+  var hiddenMap = document.createElement('div');
+  hiddenMap.style.cssText = 'position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;top:-9999px;';
+  document.body.appendChild(hiddenMap);
   sphereMap = new sphere.Map({
-    placeholder: document.getElementById('calc-map'),
+    placeholder: hiddenMap,
     zoom: 11,
     location: { lon: 100.5018, lat: 13.7563 },
     ui: sphere.UiComponent.None,
     language: 'th'
   });
-  sphereMap.Layers.setBase(sphere.Layers.STREETS);
   var routeEl = document.createElement('div');
   routeEl.style.display = 'none';
   document.body.appendChild(routeEl);
   sphereMap.Route.placeholder(routeEl);
   sphereMap.Route.auto(true);
-  // Resize after tiles settle
-  setTimeout(function(){ sphereMap.resize(); }, 300);
-  setTimeout(function(){ sphereMap.resize(); }, 1000);
-  setTimeout(function(){ sphereMap.resize(); }, 2500);
 }
 
 // ── Service selector ──────────────────────────
@@ -696,35 +698,41 @@ function delayHide(id){
 function setPlace(field, name){
   var input = document.getElementById('calc-' + field);
   input.value = name;
-  suggest(field);
+  // Geocode the chip name immediately and store coords
+  if(sphereMap){
+    sphereMap.Search.suggest(name, { limit: 1 }).then(function(res){
+      if(res && res.data && res.data.length && res.data[0].lon){
+        var loc = { lon: res.data[0].lon, lat: res.data[0].lat };
+        console.log('Chip geocoded ' + field + ':', JSON.stringify(loc));
+        if(field === 'pickup') pickupLoc = loc;
+        else garageLoc = loc;
+        placeMarker(field, loc);
+      }
+    });
+  }
 }
 
-// ── Place marker on map ───────────────────────
-function placeMarker(field, loc){
-  if(!sphereMap) return;
-  if(field === 'pickup'){
-    if(pickupMarker) sphereMap.Overlays.remove(pickupMarker);
-    pickupMarker = new sphere.Marker(loc, { title: 'Pickup' });
-    sphereMap.Overlays.add(pickupMarker);
-    pickupLoc = loc;
-  } else {
-    if(garageMarker) sphereMap.Overlays.remove(garageMarker);
-    garageMarker = new sphere.Marker(loc, { title: 'Garage' });
-    sphereMap.Overlays.add(garageMarker);
-    garageLoc = loc;
-  }
-  // Fit map to show both markers if both set
+// Update iframe map to show locations
+function updateMapIframe(){
+  var iframe = document.getElementById('calc-map-iframe');
+  if(!iframe) return;
+  var baseUrl = 'https://api.sphere.gistda.or.th/services/snippet/embed?locale=th&map=sphere_streets&key=F37900F5388744B088C1ABEB922D945A';
   if(pickupLoc && garageLoc){
-    sphereMap.bound({
-      minLon: Math.min(pickupLoc.lon, garageLoc.lon) - 0.01,
-      minLat: Math.min(pickupLoc.lat, garageLoc.lat) - 0.01,
-      maxLon: Math.max(pickupLoc.lon, garageLoc.lon) + 0.01,
-      maxLat: Math.max(pickupLoc.lat, garageLoc.lat) + 0.01
-    });
-  } else {
-    sphereMap.location(loc, true);
-    sphereMap.zoom(14, true);
+    // Show midpoint between both locations
+    var midLon = (pickupLoc.lon + garageLoc.lon) / 2;
+    var midLat = (pickupLoc.lat + garageLoc.lat) / 2;
+    iframe.src = baseUrl + '&lon=' + midLon + '&lat=' + midLat + '&zoom=12';
+  } else if(pickupLoc){
+    iframe.src = baseUrl + '&lon=' + pickupLoc.lon + '&lat=' + pickupLoc.lat + '&zoom=14';
+  } else if(garageLoc){
+    iframe.src = baseUrl + '&lon=' + garageLoc.lon + '&lat=' + garageLoc.lat + '&zoom=14';
   }
+}
+
+function placeMarker(field, loc){
+  if(field === 'pickup') pickupLoc = loc;
+  else garageLoc = loc;
+  updateMapIframe();
 }
 
 // ── Calculate route ───────────────────────────
