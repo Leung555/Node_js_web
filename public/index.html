@@ -144,8 +144,9 @@ p{margin:0;}
   .promo-bar{font-size:0.76rem;padding-left:12px;}
 }
 </style>
+<script src="https://api.sphere.gistda.or.th/map/js/?key=F37900F5388744B088C1ABEB922D945A" type="text/javascript"></script>
 </head>
-<body>
+<body onload="initSphereMap()">
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -609,15 +610,21 @@ p{margin:0;}
 }
 </style>
 
-<!-- GISTDA Sphere JS -->
+<!-- GISTDA Sphere JS loaded in <head> -->
 <script>
+/* ── Sphere map vars ── */
 var sphereMap = null;
 var pickupMarker = null;
 var garageMarker = null;
 var pickupLoc = null;
 var garageLoc = null;
 
-// Define init function BEFORE loading Sphere so it's ready when Sphere calls it
+/* ── Fare Calculator vars ── */
+var FREE_KM = 15;
+var RATE = 6;
+var calcBase = 550;
+
+/* ── Init map — called by body onload ── */
 function initSphereMap(){
   sphereMap = new sphere.Map({
     placeholder: document.getElementById('calc-map'),
@@ -627,23 +634,12 @@ function initSphereMap(){
     language: 'th'
   });
   sphereMap.Layers.setBase(sphere.Layers.STREETS);
-  // Route placeholder
   var routeEl = document.createElement('div');
   routeEl.style.display = 'none';
   document.body.appendChild(routeEl);
   sphereMap.Route.placeholder(routeEl);
   sphereMap.Route.auto(true);
-  sphereMap.Event.bind(sphere.EventName.Ready, function(){
-    sphereMap.resize();
-  });
 }
-</script>
-<script src="https://api.sphere.gistda.or.th/map/js/?key=F37900F5388744B088C1ABEB922D945A&callback=initSphereMap"></script>
-<script>
-/* ── Fare Calculator ── */
-var FREE_KM = 15;
-var RATE = 6;
-var calcBase = 550;
 
 // ── Service selector ──────────────────────────
 function selectService(el, base){
