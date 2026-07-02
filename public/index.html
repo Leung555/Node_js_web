@@ -748,13 +748,17 @@ function calcRoute(){
     console.log('Route response:', JSON.stringify(route).substring(0, 500));
     btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
     btn.disabled = false;
-    // Parse distance — try multiple possible response shapes
-    var distM = null;
-    if(route && route.data && route.data[0]) distM = route.data[0].distance || route.data[0].dist || route.data[0].total_distance;
-    if(!distM && route && route.route) distM = route.route.distance || route.route.dist;
-    if(!distM && route && route.distance) distM = route.distance;
-    console.log('Parsed distance (m):', distM);
-    if(!distM){
+    // Route returns GeoJSON FeatureCollection — sum all segment distances
+    var distM = 0;
+    if(route && route.type === 'FeatureCollection' && route.features){
+      route.features.forEach(function(f){
+        if(f.properties && f.properties.distance) distM += f.properties.distance;
+      });
+    } else if(route && route.data && route.data[0]) {
+      distM = route.data[0].distance || route.data[0].dist || route.data[0].total_distance || 0;
+    }
+    console.log('Total distance (m):', distM);
+    if(!distM || distM <= 0){
       errEl.textContent = 'Could not calculate route. Please select locations from the dropdown.';
       errEl.style.display = 'block';
       return;
