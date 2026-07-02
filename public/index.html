@@ -664,21 +664,30 @@ function suggest(field){
   }, 280);
 }
 
+function extractCoords(item){
+  // Sphere API may use different field names depending on endpoint
+  var lon = item.lon || item.longitude || item.x || (item.location && item.location.lon) || (item.location && item.location.longitude);
+  var lat = item.lat || item.latitude || item.y || (item.location && item.location.lat) || (item.location && item.location.latitude);
+  console.log('extractCoords from:', JSON.stringify(item), '→ lon:', lon, 'lat:', lat);
+  if(lon && lat) return { lon: parseFloat(lon), lat: parseFloat(lat) };
+  return null;
+}
+
 // ── Get coordinates from search ───────────────
 function searchPlace(name, field){
   fetch('https://api.sphere.gistda.or.th/services/search/search?keyword=' + encodeURIComponent(name) + '&limit=1&key=' + SPHERE_KEY)
     .then(function(r){ return r.json(); })
     .then(function(res){
+      console.log('searchPlace result:', JSON.stringify(res).substring(0,300));
       if(res && res.data && res.data.length){
-        var item = res.data[0];
-        var loc = { lon: item.lon || item.longitude, lat: item.lat || item.latitude };
-        if(loc.lon && loc.lat){
+        var loc = extractCoords(res.data[0]);
+        if(loc){
           if(field === 'pickup') pickupLoc = loc;
           else garageLoc = loc;
           updateMapIframe();
         }
       }
-    }).catch(function(){});
+    }).catch(function(e){ console.log('searchPlace error:', e); });
 }
 
 function delayHide(id){
@@ -758,11 +767,10 @@ function geocodeREST(text){
   return fetch('https://api.sphere.gistda.or.th/services/search/search?keyword=' + encodeURIComponent(text) + '&limit=1&key=' + SPHERE_KEY)
     .then(function(r){ return r.json(); })
     .then(function(res){
+      console.log('geocodeREST result for "' + text + '":', JSON.stringify(res).substring(0,300));
       if(res && res.data && res.data.length){
-        var item = res.data[0];
-        var lon = item.lon || item.longitude;
-        var lat = item.lat || item.latitude;
-        if(lon && lat) return { lon: lon, lat: lat };
+        var loc = extractCoords(res.data[0]);
+        if(loc) return loc;
       }
       throw new Error('Not found: ' + text);
     });
