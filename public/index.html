@@ -639,6 +639,8 @@ function init(){
   document.body.appendChild(routeEl);
   sphereMap.Route.placeholder(routeEl);
   sphereMap.Route.auto(true);
+  // Resize after tiles settle
+  setTimeout(function(){ sphereMap.resize(); }, 500);
 }
 
 // ── Service selector ──────────────────────────
@@ -657,6 +659,9 @@ function suggest(field){
   var input = document.getElementById('calc-' + field);
   var box = document.getElementById(field + '-suggest');
   var kw = input.value.trim();
+  // Reset stored coords when user types manually
+  if(field === 'pickup') pickupLoc = null;
+  else garageLoc = null;
   if(kw.length < 2){ box.classList.remove('open'); return; }
   suggestTimer = setTimeout(function(){
     sphereMap.Search.suggest(kw, { limit: 6 }).then(function(res){
@@ -804,11 +809,17 @@ function calcRoute(){
 
 // Geocode a text string using Sphere Search
 function geocode(text){
-  return sphereMap.Search.suggest(text, { limit: 1 }).then(function(res){
+  return sphereMap.Search.search(text, { limit: 1 }).then(function(res){
     if(res && res.data && res.data.length){
       return { lon: res.data[0].lon, lat: res.data[0].lat };
     }
-    throw new Error('Not found');
+    // fallback to suggest
+    return sphereMap.Search.suggest(text, { limit: 1 }).then(function(res2){
+      if(res2 && res2.data && res2.data.length){
+        return { lon: res2.data[0].lon, lat: res2.data[0].lat };
+      }
+      throw new Error('Not found');
+    });
   });
 }
 
