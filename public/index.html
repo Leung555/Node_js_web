@@ -65,7 +65,7 @@ p{margin:0;}
 .nav-toggle{display:none;padding:6px;background:none;border:none;cursor:pointer;}
 .mobile-menu{position:fixed;inset:0;background:#071428;color:#fff;z-index:200;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:24px;transform:translateY(-100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);}
 .mobile-menu.open{transform:translateY(0);}
-.mobile-menu a{font-family:"Syne",sans-serif;font-size:1.5rem;font-weight:700;color:#fff;opacity:0.85;transition:opacity 0.15s;}
+.mobile-menu a{font-family:"Helvetica Neue","Helvetica",Arial,sans-serif;font-size:1.5rem;font-weight:700;color:#fff;opacity:0.85;transition:opacity 0.15s;}
 .mobile-menu a:hover{opacity:1;}
 .mobile-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.1);border:none;color:#fff;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
 .mobile-close:hover{background:rgba(255,255,255,0.2);}
@@ -77,9 +77,9 @@ p{margin:0;}
 .hero-glow-2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,64,0.07) 0%,transparent 65%);bottom:-100px;left:-80px;pointer-events:none;}
 
 /* ── Section helpers ── */
-.sec{padding:clamp(72px,9vw,110px) 0;}
+.sec{padding:clamp(80px,10vw,122px) 0;}
 .eyebrow{font-size:0.73rem;font-weight:700;color:#00C16E;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
-.sec-head{font-family:"Syne",sans-serif;font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;color:#0D1F3C;margin-bottom:16px;}
+.sec-head{font-family:"Helvetica Neue","Helvetica",Arial,sans-serif;font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;color:#0D1F3C;margin-bottom:16px;}
 .sec-head-light{color:#fff;}
 .sec-sub{color:#4A6491;font-size:1rem;line-height:1.75;max-width:520px;}
 .sec-sub-light{color:rgba(255,255,255,0.68);font-size:1rem;line-height:1.75;max-width:520px;}
@@ -92,12 +92,12 @@ p{margin:0;}
 .card-navy{background:#0D1F3C;border:1px solid rgba(0,193,110,0.15);border-radius:20px;padding:28px;}
 
 /* ── Pricing ── */
-.price-amount{font-family:"Syne",sans-serif;font-size:1.65rem;font-weight:800;color:#0D1F3C;line-height:1;}
+.price-amount{font-family:"Helvetica Neue","Helvetica",Arial,sans-serif;font-size:1.65rem;font-weight:800;color:#0D1F3C;line-height:1;}
 .price-unit{font-size:0.8rem;color:#4A6491;font-weight:500;}
 .price-tag{display:inline-flex;align-items:baseline;gap:4px;}
 
 /* ── Team ── */
-.avatar{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Syne",sans-serif;font-size:1rem;font-weight:800;flex-shrink:0;}
+.avatar{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Helvetica Neue","Helvetica",Arial,sans-serif;font-size:1rem;font-weight:800;flex-shrink:0;}
 
 /* ── Form ── */
 .field-label{display:block;font-size:0.82rem;font-weight:700;color:#0D1F3C;margin-bottom:6px;letter-spacing:0.01em;}
@@ -205,7 +205,7 @@ p{margin:0;}
 <!-- ═══════════════════════════════════════════════════
      HERO
 ═══════════════════════════════════════════════════ -->
-<section class="hero-bg" style="padding:clamp(72px,10vw,120px) 0 clamp(64px,9vw,110px);">
+<section class="hero-bg" style="padding:clamp(80px,10vw,132px) 0 clamp(70px,10vw,122px);">
   <div class="hero-grid-lines"></div>
   <div class="hero-glow-1"></div>
   <div class="hero-glow-2"></div>
@@ -217,10 +217,17 @@ p{margin:0;}
         <span style="font-size:0.76rem;font-weight:700;color:#00C16E;letter-spacing:0.1em;text-transform:uppercase;">Bangkok Car Concierge · Est. 2025</span>
       </div>
       <!-- Headline -->
-      <h1 class="reveal" style="font-family:'Syne',sans-serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;color:#fff;line-height:1.04;letter-spacing:-0.025em;margin-bottom:24px;">
-        Your Car Gets Serviced.<br>
-        <span style="color:#00C16E;">You Get Your Saturday Back.</span>
-      </h1>
+      <div class="reveal" style="margin-bottom:24px;display:flex;justify-content:center;">
+        <div style="display:flex;align-items:center;gap:16px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-weight:800;letter-spacing:-0.03em;line-height:1;">
+          <!-- YOUR — tall anchor -->
+          <div style="font-size:clamp(5rem,11vw,9rem);color:#fff;line-height:1;flex-shrink:0;">YOUR</div>
+          <!-- Two lines stacked -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:clamp(1.6rem,3.6vw,3rem);color:#fff;white-space:nowrap;">Car Gets Serviced.</div>
+            <div style="font-size:clamp(1.6rem,3.6vw,3rem);color:#00C16E;white-space:nowrap;">Saturday Stays Yours.</div>
+          </div>
+        </div>
+      </div>
       <!-- Sub -->
       <p class="reveal" style="font-size:clamp(1rem,2.2vw,1.18rem);color:rgba(255,255,255,0.68);line-height:1.8;max-width:620px;margin:0 auto 18px;">
         Skip the garage waiting room. We pick up your car, negotiate the bill on your behalf, and return it fully serviced, while you keep your day.
@@ -272,7 +279,7 @@ p{margin:0;}
       <!-- Left: copy -->
       <div style="flex:1;min-width:280px;" class="reveal">
         <p class="eyebrow">The Problem We Solve</p>
-        <h2 class="sec-head">Most cars need servicing twice a year. Most people keep postponing it.</h2>
+        <h2 class="sec-head" style="font-size:clamp(1.5rem,2.4vw,2.2rem);"><span style="display:inline-block;white-space:nowrap;">Most cars need servicing twice a year.</span> <span style="display:inline-block;white-space:nowrap;">Most people keep postponing it.</span></h2>
         <p class="sec-sub" style="margin-bottom:20px;">
           Mechanics are closed Sundays. Nobody wants to burn a weekday sitting in a service center. And once you drop your keys off, you're stuck, stranded without freedom or flexibility.
         </p>
@@ -293,15 +300,15 @@ p{margin:0;}
       <!-- Right: impact numbers -->
       <div style="flex:0 0 auto;width:clamp(260px,35%,360px);display:flex;flex-direction:column;gap:16px;" class="reveal">
         <div class="card-white" style="border-left:3px solid #F0C040;">
-          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;">Saturday</div>
+          <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;">Saturday</div>
           <div style="font-size:0.88rem;color:#4A6491;margin-top:6px;line-height:1.5;">The day most Bangkok car owners lose to a garage waiting room. We give it back to you.</div>
         </div>
         <div class="card-white" style="border-left:3px solid #00C16E;">
-          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;">Up to 20%</div>
+          <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;">Up to 20%</div>
           <div style="font-size:0.88rem;color:#4A6491;margin-top:6px;line-height:1.5;">Average invoice reduction driven by our team's industry expertise. We routinely save clients thousands on routine maintenance.</div>
         </div>
         <div class="card-white" style="border-left:3px solid #0D1F3C;">
-          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;">2× / Year</div>
+          <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;">2× / Year</div>
           <div style="font-size:0.88rem;color:#4A6491;margin-top:6px;line-height:1.5;">How often your car needs attention. We make sure it actually happens — on your schedule.</div>
         </div>
       </div>
@@ -317,7 +324,7 @@ p{margin:0;}
     <div style="text-align:center;max-width:580px;margin:0 auto 56px;" class="reveal center">
       <p class="eyebrow">Step by Step</p>
       <h2 class="sec-head">How every Papapik pickup works.</h2>
-      <p class="sec-sub">A signed procedure, photo-documented, tracked live. Nothing left to chance.</p>
+      <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">A signed procedure, photo-documented, tracked live.</span> <span style="display:inline-block;white-space:nowrap;">Nothing left to chance.</span></p>
     </div>
     <div class="steps-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
       <!-- Step 1 -->
@@ -326,7 +333,7 @@ p{margin:0;}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
         <div style="font-size:0.65rem;font-weight:700;color:#00C16E;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">01 · Schedule</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:0.98rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">You Book. We Confirm.</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.98rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">You Book. We Confirm.</h3>
         <p style="color:#4A6491;font-size:0.84rem;line-height:1.65;">Submit via our form or LINE. We confirm your slot by phone, LINE, or email.</p>
       </div>
       <!-- Step 2 -->
@@ -335,7 +342,7 @@ p{margin:0;}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         </div>
         <div style="font-size:0.65rem;font-weight:700;color:#00C16E;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">02 · Pickup</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:0.98rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">We Arrive & Document.</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.98rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">We Arrive & Document.</h3>
         <p style="color:#4A6491;font-size:0.84rem;line-height:1.65;">Our driver arrives on time, photographs your car's condition, signs a service contract with you, then walks you through the plan and estimated price.</p>
       </div>
       <!-- Step 3 -->
@@ -344,7 +351,7 @@ p{margin:0;}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div style="font-size:0.65rem;font-weight:700;color:#00C16E;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">03 · Service</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:0.98rem;font-weight:700;color:#fff;margin-bottom:10px;">We Negotiate. You Relax.</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.98rem;font-weight:700;color:#fff;margin-bottom:10px;">We Negotiate. You Relax.</h3>
         <p style="color:rgba(255,255,255,0.62);font-size:0.84rem;line-height:1.65;">We take it to your preferred garage, review every work item, and send you a LINE update at every stage. Nothing gets approved without your say.</p>
       </div>
       <!-- Step 4 -->
@@ -353,7 +360,7 @@ p{margin:0;}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
         <div style="font-size:0.65rem;font-weight:700;color:#F0C040;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">04 · Return</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:0.98rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Car Back. Case Closed.</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.98rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Car Back. Case Closed.</h3>
         <p style="color:#4A6491;font-size:0.84rem;line-height:1.65;">Your car is returned to your door. We review the bill together, you sign off, payment is collected, and the case is marked complete on LINE.</p>
       </div>
     </div>
@@ -376,20 +383,20 @@ p{margin:0;}
 <!-- ═══════════════════════════════════════════════════
      SERVICES
 ═══════════════════════════════════════════════════ -->
-<section id="services" style="background:#0D1F3C;padding:clamp(72px,9vw,110px) 0;position:relative;overflow:hidden;">
+<section id="services" style="background:#0D1F3C;padding:clamp(80px,10vw,122px) 0;position:relative;overflow:hidden;">
   <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,193,110,0.09) 0%,transparent 65%);bottom:-200px;left:-100px;pointer-events:none;"></div>
   <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,64,0.06) 0%,transparent 65%);top:-100px;right:-60px;pointer-events:none;"></div>
   <div class="container" style="position:relative;z-index:2;">
     <div style="max-width:580px;margin-bottom:52px;" class="reveal">
       <p class="eyebrow">All Services</p>
       <h2 class="sec-head sec-head-light" style="font-size:clamp(1.5rem,2.6vw,2.2rem);white-space:nowrap;">Everything your car needs, handled.</h2>
-      <p class="sec-sub-light">One call, one team, every use case. From routine maintenance to annual registration.</p>
+      <p class="sec-sub-light"><span style="display:inline-block;white-space:nowrap;">One call, one team, every use case.</span> <span style="display:inline-block;white-space:nowrap;">From routine maintenance to annual registration.</span></p>
     </div>
     <!-- Featured: Maintenance -->
     <div class="reveal" style="background:rgba(255,255,255,0.05);border:1px solid rgba(0,193,110,0.25);border-radius:24px;padding:clamp(28px,4vw,44px);margin-bottom:22px;display:flex;align-items:center;gap:40px;flex-wrap:wrap;">
       <div style="flex:1;min-width:260px;">
         <div style="display:inline-flex;align-items:center;gap:6px;background:#F0C040;color:#0D1F3C;border-radius:999px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;margin-bottom:16px;">⭐ Most Popular</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:12px;">Routine Maintenance Pickup</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:12px;">Routine Maintenance Pickup</h3>
         <p style="color:rgba(255,255,255,0.65);font-size:0.9rem;line-height:1.7;margin-bottom:20px;">Never miss a service interval again. We coordinate with your preferred garage, argue down the unnecessary extras, and bring your car back the same day.</p>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div style="display:flex;align-items:center;gap:10px;font-size:0.86rem;color:rgba(255,255,255,0.75);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>Photo-documented pickup & drop-off</div>
@@ -399,7 +406,7 @@ p{margin:0;}
       </div>
       <div style="flex:0 0 auto;text-align:center;">
         <div style="font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Starting at</div>
-        <div style="font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:#F0C040;line-height:1;">฿550</div>
+        <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:2.8rem;font-weight:800;color:#F0C040;line-height:1;">฿550</div>
         <div style="font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:6px;">per trip + ฿6/km over 15 km</div>
         <a href="#book" class="btn-gold" style="margin-top:18px;font-size:0.9rem;padding:13px 24px;">Book This Service</a>
       </div>
@@ -411,9 +418,9 @@ p{margin:0;}
         <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,193,110,0.12);color:#00C16E;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M7.5 8C6 9.5 5 11.5 5 14a7 7 0 0 0 14 0c0-2.5-1-4.5-2.5-6"/><path d="M8 14h8"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.02rem;font-weight:700;color:#fff;margin-bottom:10px;">On-Site Car Wash</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.02rem;font-weight:700;color:#fff;margin-bottom:10px;">On-Site Car Wash</h3>
         <p style="color:rgba(255,255,255,0.58);font-size:0.86rem;line-height:1.65;margin-bottom:16px;">A professional-grade wash at your doorstep. We bring all equipment — you just need a parking spot.</p>
-        <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#F0C040;line-height:1;">฿240</div>
+        <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.4rem;font-weight:800;color:#F0C040;line-height:1;">฿240</div>
         <div style="font-size:0.76rem;color:rgba(255,255,255,0.38);margin-top:4px;margin-bottom:14px;">per visit + ฿6/km</div>
         <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:700;color:#00C16E;">Book →</a>
       </div>
@@ -422,9 +429,9 @@ p{margin:0;}
         <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,193,110,0.12);color:#00C16E;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.02rem;font-weight:700;color:#fff;margin-bottom:10px;">Multi-Day Repair Valet</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.02rem;font-weight:700;color:#fff;margin-bottom:10px;">Multi-Day Repair Valet</h3>
         <p style="color:rgba(255,255,255,0.58);font-size:0.86rem;line-height:1.65;margin-bottom:16px;">Extended repairs shouldn't mean extended stress. We drop off, monitor progress, and return your car the moment it's done.</p>
-        <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#F0C040;line-height:1;">From ฿750</div>
+        <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.4rem;font-weight:800;color:#F0C040;line-height:1;">From ฿750</div>
         <div style="font-size:0.76rem;color:rgba(255,255,255,0.38);margin-top:4px;margin-bottom:14px;">per trip + ฿6/km</div>
         <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:700;color:#00C16E;">Book →</a>
       </div>
@@ -433,9 +440,9 @@ p{margin:0;}
         <div style="width:46px;height:46px;border-radius:14px;background:rgba(0,193,110,0.12);color:#00C16E;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.02rem;font-weight:700;color:#fff;margin-bottom:10px;">Tax Renewal & Inspection (ต่อภาษี)</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.02rem;font-weight:700;color:#fff;margin-bottom:10px;">Tax Renewal & Inspection (ต่อภาษี)</h3>
         <p style="color:rgba(255,255,255,0.58);font-size:0.86rem;line-height:1.65;margin-bottom:16px;">Annual vehicle tax (ต่อภาษี), พ.ร.บ. insurance, and roadworthiness inspections — handled without you joining a single queue.</p>
-        <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#F0C040;line-height:1;">฿350</div>
+        <div style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.4rem;font-weight:800;color:#F0C040;line-height:1;">฿350</div>
         <div style="font-size:0.76rem;color:rgba(255,255,255,0.38);margin-top:4px;margin-bottom:14px;">per trip + ฿6/km</div>
         <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.8rem;font-weight:700;color:#00C16E;">Book →</a>
       </div>
@@ -446,66 +453,26 @@ p{margin:0;}
 <!-- ═══════════════════════════════════════════════════
      PRICING + FARE CALCULATOR
 ═══════════════════════════════════════════════════ -->
-<section id="pricing" class="sec" style="background:#F4F8FF;">
+<section id="pricing" class="sec" style="background:#F4F8FF;padding:clamp(90px,11vw,138px) 0;">
   <div class="container">
 
     <!-- Section head -->
     <div style="text-align:center;max-width:580px;margin:0 auto 52px;" class="reveal center">
       <p class="eyebrow">Clear Pricing</p>
-      <h2 class="sec-head">Flat rates. No surprises.</h2>
-      <p class="sec-sub">All trips include a free 15 km radius. See exactly what you'll pay before you book.</p>
-    </div>
-
-    <!-- Service rate cards -->
-    <div class="pricing-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:40px;">
-      <div class="card-white reveal" style="border-top:3px solid #00C16E;padding:26px 22px;">
-        <div style="width:44px;height:44px;border-radius:12px;background:#F4F8FF;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        </div>
-        <h4 style="font-family:'Syne',sans-serif;font-size:0.96rem;font-weight:700;color:#0D1F3C;margin-bottom:8px;">Maintenance Pickup</h4>
-        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;margin-bottom:4px;">฿550</div>
-        <div style="font-size:0.76rem;color:#4A6491;margin-bottom:14px;">per trip + ฿6/km over 15 km</div>
-        <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.82rem;font-weight:700;color:#00C16E;">Book →</a>
-      </div>
-      <div class="card-white reveal" style="border-top:3px solid #00C16E;padding:26px 22px;">
-        <div style="width:44px;height:44px;border-radius:12px;background:#F4F8FF;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6"/><path d="M7.5 8C6 9.5 5 11.5 5 14a7 7 0 0 0 14 0c0-2.5-1-4.5-2.5-6"/></svg>
-        </div>
-        <h4 style="font-family:'Syne',sans-serif;font-size:0.96rem;font-weight:700;color:#0D1F3C;margin-bottom:8px;">On-Site Car Wash</h4>
-        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;margin-bottom:4px;">฿240</div>
-        <div style="font-size:0.76rem;color:#4A6491;margin-bottom:14px;">per visit + ฿6/km</div>
-        <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.82rem;font-weight:700;color:#00C16E;">Book →</a>
-      </div>
-      <div class="card-white reveal" style="border-top:3px solid #F0C040;padding:26px 22px;">
-        <div style="width:44px;height:44px;border-radius:12px;background:#F4F8FF;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-        </div>
-        <h4 style="font-family:'Syne',sans-serif;font-size:0.96rem;font-weight:700;color:#0D1F3C;margin-bottom:8px;">Multi-Day Repair</h4>
-        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;margin-bottom:4px;">From ฿750</div>
-        <div style="font-size:0.76rem;color:#4A6491;margin-bottom:14px;">per trip + ฿6/km</div>
-        <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.82rem;font-weight:700;color:#00C16E;">Book →</a>
-      </div>
-      <div class="card-white reveal" style="border-top:3px solid #0D1F3C;padding:26px 22px;">
-        <div style="width:44px;height:44px;border-radius:12px;background:#F4F8FF;display:flex;align-items:center;justify-content:center;margin-bottom:14px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div>
-        <h4 style="font-family:'Syne',sans-serif;font-size:0.96rem;font-weight:700;color:#0D1F3C;margin-bottom:8px;">Tax & Inspection</h4>
-        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#0D1F3C;line-height:1;margin-bottom:4px;">฿350</div>
-        <div style="font-size:0.76rem;color:#4A6491;margin-bottom:14px;">per trip + ฿6/km</div>
-        <a href="#book" style="display:inline-flex;align-items:center;gap:5px;font-size:0.82rem;font-weight:700;color:#00C16E;">Book →</a>
-      </div>
+      <h2 class="sec-head"><span style="display:inline-block;white-space:nowrap;">Flat rates.</span> <span style="display:inline-block;white-space:nowrap;">No surprises.</span></h2>
+      <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">All trips include a free 15 km radius.</span> <span style="display:inline-block;white-space:nowrap;">See exactly what you'll pay before you book.</span></p>
     </div>
 
     <!-- ── FARE CALCULATOR ── -->
     <div class="reveal" style="background:#0D1F3C;border-radius:24px;overflow:hidden;">
       <!-- Header bar -->
-      <div style="padding:28px 32px 0;display:flex;align-items:center;gap:14px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:rgba(240,192,64,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <div style="padding:32px 36px 0;display:flex;align-items:center;gap:14px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(240,192,64,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F0C040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
         <div>
-          <p style="font-size:0.7rem;font-weight:700;color:#F0C040;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px;">Fare Estimator</p>
-          <p style="font-size:1.05rem;font-weight:700;color:#fff;font-family:'Syne',sans-serif;">Calculate your trip cost instantly</p>
+          <p style="font-size:0.7rem;font-weight:700;color:#F0C040;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px;">Fare Estimator</p>
+          <p style="font-size:1.1rem;font-weight:700;color:#fff;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;">Calculate your trip cost instantly</p>
         </div>
       </div>
 
@@ -513,132 +480,120 @@ p{margin:0;}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;" id="calc-layout">
 
         <!-- Left: inputs -->
-        <div style="padding:24px 32px 32px;">
+        <div style="padding:28px 32px 36px;">
 
-          <!-- Service selector -->
-          <div style="margin-bottom:20px;">
-            <label style="display:block;font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">1 · Service Type</label>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="svc-btns">
-              <button onclick="selectService(this,'maintenance',550)" class="svc-pill active" data-base="550">
+          <!-- Step 1: Service selector -->
+          <div style="margin-bottom:22px;">
+            <label style="display:block;font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">1 · Select Service</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <button onclick="selectService(this,550)" class="svc-pill active">
                 <span style="font-weight:700;">Maintenance</span><span class="pill-price">฿550</span>
               </button>
-              <button onclick="selectService(this,'wash',240)" class="svc-pill" data-base="240">
+              <button onclick="selectService(this,240)" class="svc-pill">
                 <span style="font-weight:700;">Car Wash</span><span class="pill-price">฿240</span>
               </button>
-              <button onclick="selectService(this,'repair',750)" class="svc-pill" data-base="750">
+              <button onclick="selectService(this,750)" class="svc-pill">
                 <span style="font-weight:700;">Repair Valet</span><span class="pill-price">From ฿750</span>
               </button>
-              <button onclick="selectService(this,'tax',350)" class="svc-pill" data-base="350">
+              <button onclick="selectService(this,350)" class="svc-pill">
                 <span style="font-weight:700;">Tax & Inspection</span><span class="pill-price">฿350</span>
               </button>
             </div>
           </div>
 
-          <!-- Pickup address -->
-          <div style="margin-bottom:16px;">
-            <label style="display:block;font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">2 · Your Pickup Location</label>
-            <div style="position:relative;">
-              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <input id="calc-pickup" type="text" placeholder="e.g. Ari BTS, Sukhumvit 11…" autocomplete="off"
-                style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-family:inherit;font-size:0.9rem;outline:none;transition:border-color 0.15s;"
-                onfocus="this.style.borderColor='rgba(0,193,110,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" oninput="calcChanged()">
-              <div id="pickup-suggestions" class="calc-suggestions"></div>
+          <!-- Step 2: Addresses -->
+          <div style="margin-bottom:22px;">
+            <label style="display:block;font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">2 · Enter Locations</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="position:relative;">
+                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+                <input id="calc-pickup" type="text" placeholder="Your pickup location…"
+                  style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:inherit;font-size:0.88rem;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
+                  onfocus="this.style.borderColor='rgba(0,193,110,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              </div>
+              <div style="position:relative;">
+                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <input id="calc-garage" type="text" placeholder="Service center / garage…"
+                  style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:inherit;font-size:0.88rem;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
+                  onfocus="this.style.borderColor='rgba(0,193,110,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+              </div>
+              <!-- Quick garage chips -->
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;">
+                <span style="font-size:0.68rem;color:rgba(255,255,255,0.3);align-self:center;">Quick pick:</span>
+                <button onclick="setGarage('Toyota Ratchadaphisek Bangkok')" class="garage-chip">Toyota Ratchadaphisek</button>
+                <button onclick="setGarage('Honda Ladprao Bangkok')" class="garage-chip">Honda Ladprao</button>
+                <button onclick="setGarage('B-Quik Asoke Bangkok')" class="garage-chip">B-Quik Asoke</button>
+                <button onclick="setGarage('Mazda Ekkamai Bangkok')" class="garage-chip">Mazda Ekkamai</button>
+              </div>
             </div>
           </div>
 
-          <!-- Service center -->
-          <div style="margin-bottom:20px;">
-            <label style="display:block;font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">3 · Service Center / Garage</label>
-            <div style="position:relative;">
-              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              <input id="calc-garage" type="text" placeholder="e.g. Toyota Ratchadaphisek…" autocomplete="off"
-                style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-family:inherit;font-size:0.9rem;outline:none;transition:border-color 0.15s;"
-                onfocus="this.style.borderColor='rgba(0,193,110,0.6)'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'" oninput="calcChanged()">
-              <div id="garage-suggestions" class="calc-suggestions"></div>
+          <!-- Step 3: Distance slider -->
+          <div style="margin-bottom:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+              <label style="font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;">3 · One-Way Distance</label>
+              <span style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1rem;font-weight:800;color:#fff;"><span id="km-display">10</span> km</span>
             </div>
-            <!-- Suggested garages chips -->
-            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;" id="garage-chips">
-              <span style="font-size:0.7rem;color:rgba(255,255,255,0.35);align-self:center;">Quick pick:</span>
-              <!-- Papa Leung can add more chips here -->
-              <button onclick="setGarage('Toyota Ratchadaphisek, Bangkok')" class="garage-chip">Toyota Ratchadaphisek</button>
-              <button onclick="setGarage('Honda Ladprao, Bangkok')" class="garage-chip">Honda Ladprao</button>
-              <button onclick="setGarage('B-Quik Asoke, Bangkok')" class="garage-chip">B-Quik Asoke</button>
-              <button onclick="setGarage('Mazda Ekkamai, Bangkok')" class="garage-chip">Mazda Ekkamai</button>
+            <input type="range" id="km-slider" min="1" max="60" value="10" oninput="updateSlider(this.value)"
+              style="width:100%;accent-color:#00C16E;cursor:pointer;height:6px;">
+            <div style="display:flex;justify-content:space-between;margin-top:5px;">
+              <span style="font-size:0.68rem;color:rgba(255,255,255,0.25);">1 km</span>
+              <span style="font-size:0.68rem;color:rgba(255,255,255,0.25);">Free up to 15 km</span>
+              <span style="font-size:0.68rem;color:rgba(255,255,255,0.25);">60 km</span>
             </div>
           </div>
 
-          <!-- Calculate button -->
-          <button onclick="runCalc()" id="calc-btn" style="width:100%;padding:14px;background:#00C16E;color:#fff;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background 0.15s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:8px;"
-            onmouseover="this.style.background='#009954'" onmouseout="this.style.background='#00C16E'">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Calculate My Fare
+          <!-- Show on Map button -->
+          <button onclick="showMap()" id="map-btn"
+            style="width:100%;padding:13px;background:rgba(255,255,255,0.08);color:#fff;border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;"
+            onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Show Route on Map
           </button>
-          <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:8px;">Powered by Google Maps · Distance calculated door-to-door</p>
+          <p style="font-size:0.7rem;color:rgba(255,255,255,0.28);text-align:center;line-height:1.5;">Opens Google Maps directions in the panel. Adjust the slider to match the distance shown.</p>
         </div>
 
-        <!-- Right: result panel + mini map -->
-        <div style="padding:24px 32px 32px;border-left:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:16px;">
+        <!-- Right: map + fare result -->
+        <div style="padding:28px 32px 36px;border-left:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:16px;">
 
-          <!-- Map embed -->
-          <div id="calc-map" style="width:100%;height:200px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
-            <div style="text-align:center;">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <p style="font-size:0.76rem;color:rgba(255,255,255,0.25);margin-top:8px;">Map appears after calculation</p>
+          <!-- Map iframe panel -->
+          <div id="calc-map" style="width:100%;height:240px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <div style="text-align:center;padding:16px;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <p style="font-size:0.78rem;color:rgba(255,255,255,0.25);margin-top:10px;line-height:1.6;">Enter your locations and tap<br>"Show Route on Map"</p>
             </div>
           </div>
 
-          <!-- Result breakdown -->
-          <div id="calc-result" style="display:none;">
-            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px;">
-              <!-- Route summary -->
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.07);">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span id="res-route" style="font-size:0.8rem;color:rgba(255,255,255,0.55);flex:1;"></span>
+          <!-- Live fare breakdown — updates with slider -->
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px;flex:1;">
+            <p style="font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">Fare Breakdown</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Round trip distance</span>
+                <span id="res-dist" style="font-size:0.88rem;font-weight:600;color:#fff;">20 km</span>
               </div>
-              <!-- Breakdown rows -->
-              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
-                <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                  <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Distance</span>
-                  <span id="res-dist" style="font-size:0.88rem;font-weight:600;color:#fff;"></span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                  <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Base service fee</span>
-                  <span id="res-base" style="font-size:0.88rem;font-weight:600;color:#fff;"></span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;" id="res-surcharge-row">
-                  <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Distance surcharge <span id="res-km-detail" style="font-size:0.74rem;"></span></span>
-                  <span id="res-surcharge" style="font-size:0.88rem;font-weight:600;color:#F0C040;"></span>
-                </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Base service fee</span>
+                <span id="res-base" style="font-size:0.88rem;font-weight:600;color:#fff;">฿550</span>
               </div>
-              <!-- Total -->
-              <div style="background:rgba(0,193,110,0.1);border:1px solid rgba(0,193,110,0.2);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.75);">Estimated Total</span>
-                <span id="res-total" style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:#00C16E;"></span>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;" id="res-surcharge-row">
+                <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Distance surcharge <span id="res-km-detail" style="font-size:0.72rem;color:rgba(255,255,255,0.35);"></span></span>
+                <span id="res-surcharge" style="font-size:0.88rem;font-weight:600;color:#F0C040;">฿0</span>
               </div>
-              <p style="font-size:0.72rem;color:rgba(255,255,255,0.28);margin-top:10px;line-height:1.5;">Estimate only. Final fare confirmed before your trip starts. Trip includes pickup → garage → return to you.</p>
             </div>
-            <a href="#book" class="btn-gold" style="width:100%;justify-content:center;margin-top:12px;font-size:0.92rem;padding:13px;">
-              Book This Trip →
-            </a>
+            <!-- Total -->
+            <div style="background:rgba(0,193,110,0.12);border:1px solid rgba(0,193,110,0.25);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <span style="font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.75);">Estimated Total</span>
+              <span id="res-total" style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.7rem;font-weight:800;color:#00C16E;">฿550</span>
+            </div>
+            <p style="font-size:0.7rem;color:rgba(255,255,255,0.25);line-height:1.5;">Estimate based on round trip. Final fare confirmed before we move your car.</p>
           </div>
 
-          <!-- Idle state (before calculation) -->
-          <div id="calc-idle" style="flex:1;display:flex;flex-direction:column;gap:12px;">
-            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;">
-              <div style="width:8px;height:8px;border-radius:50%;background:#00C16E;flex-shrink:0;"></div>
-              <p style="font-size:0.84rem;color:rgba(255,255,255,0.55);line-height:1.5;">First 15 km is always included free in every trip.</p>
-            </div>
-            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;">
-              <div style="width:8px;height:8px;border-radius:50%;background:#F0C040;flex-shrink:0;"></div>
-              <p style="font-size:0.84rem;color:rgba(255,255,255,0.55);line-height:1.5;">Beyond 15 km, it's ฿6 per km — calculated on the full round trip.</p>
-            </div>
-            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;">
-              <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);flex-shrink:0;"></div>
-              <p style="font-size:0.84rem;color:rgba(255,255,255,0.55);line-height:1.5;">You always approve the final price before we move your car.</p>
-            </div>
-          </div>
-
+          <a href="#book" class="btn-gold" style="width:100%;justify-content:center;font-size:0.92rem;padding:13px;">
+            Book This Trip →
+          </a>
         </div>
+
       </div><!-- end calc-layout -->
     </div><!-- end calculator card -->
 
@@ -647,18 +602,13 @@ p{margin:0;}
 
 <style>
 /* ── Calculator styles ── */
-.svc-pill{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 12px;color:rgba(255,255,255,0.65);font-family:inherit;font-size:0.8rem;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px;transition:all 0.15s;}
+.svc-pill{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:rgba(255,255,255,0.65);font-family:inherit;font-size:0.8rem;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:all 0.15s;}
 .svc-pill:hover{border-color:rgba(0,193,110,0.4);background:rgba(0,193,110,0.08);}
 .svc-pill.active{border-color:#00C16E;background:rgba(0,193,110,0.12);color:#fff;}
 .pill-price{font-size:0.72rem;color:rgba(255,255,255,0.4);font-weight:500;}
 .svc-pill.active .pill-price{color:#00C16E;}
-.garage-chip{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 12px;font-size:0.74rem;color:rgba(255,255,255,0.55);font-family:inherit;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
-.garage-chip:hover{background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.25);}
-.calc-suggestions{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1A3A6E;border:1px solid rgba(255,255,255,0.12);border-radius:10px;z-index:50;max-height:180px;overflow-y:auto;display:none;}
-.calc-suggestions.open{display:block;}
-.calc-suggestion-item{padding:10px 14px;font-size:0.86rem;color:rgba(255,255,255,0.8);cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06);}
-.calc-suggestion-item:last-child{border-bottom:none;}
-.calc-suggestion-item:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.garage-chip{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:4px 10px;font-size:0.72rem;color:rgba(255,255,255,0.5);font-family:inherit;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.garage-chip:hover{background:rgba(255,255,255,0.1);color:#fff;}
 @media(max-width:768px){
   #calc-layout{grid-template-columns:1fr!important;}
   #calc-layout>div:last-child{border-left:none!important;border-top:1px solid rgba(255,255,255,0.07);}
@@ -666,143 +616,62 @@ p{margin:0;}
 </style>
 
 <script>
-/* ── Fare Calculator ──────────────────────────── */
-var GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY'; // ← Papa Leung: paste key here
+/* ── Fare Calculator (embed version) ─────────── */
+var calcBase = 550;
 var FREE_KM = 15;
 var RATE_PER_KM = 6;
-var calcService = { id:'maintenance', base:550 };
-var pickupCoords = null;
-var garageCoords = null;
-var mapsLoaded = false;
-var pickupAC = null, garageAC = null;
 
-// Load Google Maps JS API on demand
-function loadGoogleMaps(cb){
-  if(window.google && window.google.maps){ cb(); return; }
-  if(GOOGLE_MAPS_API_KEY === 'YOUR_GOOGLE_MAPS_API_KEY'){
-    // Demo mode: skip real API
-    cb && cb(true);
-    return;
-  }
-  var s = document.createElement('script');
-  s.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_MAPS_API_KEY + '&libraries=places,geometry&callback=onMapsLoaded';
-  s.async = true;
-  document.head.appendChild(s);
-  window.onMapsLoaded = function(){ mapsLoaded = true; cb && cb(); };
-}
-
-function selectService(el, id, base){
+function selectService(el, base){
   document.querySelectorAll('.svc-pill').forEach(function(b){ b.classList.remove('active'); });
   el.classList.add('active');
-  calcService = { id:id, base:base };
-  recalcIfReady();
+  calcBase = base;
+  updateFare();
 }
 
 function setGarage(name){
   document.getElementById('calc-garage').value = name;
-  calcChanged();
 }
 
-function calcChanged(){
-  // If both fields have text and maps loaded, try geocoding on the fly
-  recalcIfReady();
+function updateSlider(val){
+  document.getElementById('km-display').textContent = val;
+  updateFare();
 }
 
-function recalcIfReady(){
-  // Only auto-recalc if we have stored coords
-  if(pickupCoords && garageCoords) runCalc();
+function updateFare(){
+  var oneWayKm = parseInt(document.getElementById('km-slider').value) || 10;
+  var totalKm = oneWayKm * 2; // round trip
+  var billableKm = Math.max(0, totalKm - FREE_KM);
+  var surcharge = billableKm * RATE_PER_KM;
+  var total = calcBase + surcharge;
+
+  document.getElementById('res-dist').textContent = totalKm + ' km (round trip)';
+  document.getElementById('res-base').textContent = '฿' + calcBase.toLocaleString();
+  if(surcharge > 0){
+    document.getElementById('res-surcharge').textContent = '+฿' + surcharge.toLocaleString();
+    document.getElementById('res-km-detail').textContent = '(' + billableKm + ' km × ฿6)';
+  } else {
+    document.getElementById('res-surcharge').textContent = '฿0';
+    document.getElementById('res-km-detail').textContent = '(within free 15 km)';
+  }
+  document.getElementById('res-total').textContent = '฿' + total.toLocaleString();
 }
 
-function runCalc(){
+function showMap(){
   var pickup = document.getElementById('calc-pickup').value.trim();
   var garage = document.getElementById('calc-garage').value.trim();
   if(!pickup || !garage){
-    alert('Please enter both a pickup location and a service center.');
+    alert('Please enter both a pickup location and a service center first.');
     return;
   }
-
-  var btn = document.getElementById('calc-btn');
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Calculating…';
-  btn.disabled = true;
-
-  loadGoogleMaps(function(demoMode){
-    if(demoMode){
-      // Demo mode: estimate based on character count as proxy
-      var demoKm = Math.round(8 + Math.random() * 18);
-      renderResult(pickup, garage, demoKm, true);
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
-      btn.disabled = false;
-      return;
-    }
-
-    // Real Google Maps Distance Matrix
-    var service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix({
-      origins: [pickup],
-      destinations: [garage],
-      travelMode: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.METRIC,
-      region: 'TH'
-    }, function(res, status){
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
-      btn.disabled = false;
-
-      if(status !== 'OK' || res.rows[0].elements[0].status !== 'OK'){
-        alert('Could not calculate distance. Please check the addresses and try again.');
-        return;
-      }
-      var oneWayM = res.rows[0].elements[0].distance.value; // metres
-      var oneWayKm = oneWayM / 1000;
-      // Round trip: pickup → garage → back to pickup
-      var totalKm = oneWayKm * 2;
-      renderResult(pickup, garage, totalKm, false);
-      showMapEmbed(pickup, garage);
-    });
-  });
-}
-
-function renderResult(pickup, garage, totalKm, isDemo){
-  var base = calcService.base;
-  var billableKm = Math.max(0, totalKm - FREE_KM);
-  var surcharge = Math.round(billableKm * RATE_PER_KM);
-  var total = base + surcharge;
-
-  // Shorten labels for display
-  var pLabel = pickup.length > 28 ? pickup.substring(0,28)+'…' : pickup;
-  var gLabel = garage.length > 28 ? garage.substring(0,28)+'…' : garage;
-
-  document.getElementById('res-route').textContent = pLabel + ' → ' + gLabel + ' (round trip)';
-  document.getElementById('res-dist').textContent = totalKm.toFixed(1) + ' km total' + (isDemo ? ' (demo estimate)' : '');
-  document.getElementById('res-base').textContent = '฿' + base.toLocaleString();
-
-  var surchargeRow = document.getElementById('res-surcharge-row');
-  if(surcharge > 0){
-    document.getElementById('res-surcharge').textContent = '+฿' + surcharge.toLocaleString();
-    document.getElementById('res-km-detail').textContent = '(' + billableKm.toFixed(1) + ' km × ฿6)';
-    surchargeRow.style.display = 'flex';
-  } else {
-    surchargeRow.style.display = 'none';
-  }
-  document.getElementById('res-total').textContent = '฿' + total.toLocaleString();
-
-  document.getElementById('calc-result').style.display = 'block';
-  document.getElementById('calc-idle').style.display = 'none';
-}
-
-function showMapEmbed(pickup, garage){
-  if(GOOGLE_MAPS_API_KEY === 'YOUR_GOOGLE_MAPS_API_KEY') return;
+  var origin = encodeURIComponent(pickup + ', Bangkok, Thailand');
+  var dest = encodeURIComponent(garage + ', Bangkok, Thailand');
+  var src = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=' + origin + '&destination=' + dest + '&mode=driving&language=en&region=TH';
   var mapDiv = document.getElementById('calc-map');
-  var iframe = document.createElement('iframe');
-  var q = encodeURIComponent(pickup + ' to ' + garage);
-  iframe.src = 'https://www.google.com/maps/embed/v1/directions?key=' + GOOGLE_MAPS_API_KEY
-    + '&origin=' + encodeURIComponent(pickup)
-    + '&destination=' + encodeURIComponent(garage)
-    + '&region=TH&language=en';
-  iframe.style.cssText = 'width:100%;height:200px;border:none;border-radius:14px;';
-  iframe.allowFullscreen = true;
-  mapDiv.innerHTML = '';
-  mapDiv.appendChild(iframe);
+  mapDiv.innerHTML = '<iframe src="' + src + '" width="100%" height="240" style="border:none;border-radius:14px;" allowfullscreen loading="lazy"></iframe>';
 }
+
+// Init on load
+updateFare();
 </script>
 
 <!-- ═══════════════════════════════════════════════════
@@ -813,49 +682,49 @@ function showMapEmbed(pickup, garage){
     <div style="text-align:center;max-width:580px;margin:0 auto 52px;" class="reveal center">
       <p class="eyebrow">Safety Standards</p>
       <h2 class="sec-head">Your vehicle is in the safest hands.</h2>
-      <p class="sec-sub">Safety isn't a tagline here. It's a checklist, a signed contract, and a policy number you can verify.</p>
+      <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">Safety isn't a tagline here.</span> <span style="display:inline-block;white-space:nowrap;">It's a checklist, a signed contract,</span> <span style="display:inline-block;white-space:nowrap;">and a policy number you can verify.</span></p>
     </div>
     <div class="trust-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
       <div class="card-white reveal">
         <div style="width:50px;height:50px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Background-Checked Drivers</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Background-Checked Drivers</h3>
         <p style="color:#4A6491;font-size:0.88rem;line-height:1.7;">Every driver passes a criminal background check and full service training before handling any customer's keys. No exceptions, ever.</p>
       </div>
       <div class="card-white reveal">
         <div style="width:50px;height:50px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Pre-Trip Photo Inspection</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Pre-Trip Photo Inspection</h3>
         <p style="color:#4A6491;font-size:0.88rem;line-height:1.7;">We photograph your car's complete condition at every handover, timestamped and shared with you on LINE. You always know exactly what we picked up and returned.</p>
       </div>
       <div class="card-white reveal">
         <div style="width:50px;height:50px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Fully Insured in Transit</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Fully Insured in Transit</h3>
         <p style="color:#4A6491;font-size:0.88rem;line-height:1.7;">Every pickup is covered from the moment we take the keys to the moment you sign the return. If something goes wrong on our side, we own it completely.</p>
       </div>
       <div class="card-white reveal">
         <div style="width:50px;height:50px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c.552 0 1-.449 1-1V6a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5c0 .551.448 1 1 1"/><path d="M21 12v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Signed Service Agreement</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Signed Service Agreement</h3>
         <p style="color:#4A6491;font-size:0.88rem;line-height:1.7;">Both parties sign before we move your car. The agreement was drafted by our own legal team (Papa Sun). You always talk to a real person, not a chatbot.</p>
       </div>
       <div class="card-white reveal">
         <div style="width:50px;height:50px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Live LINE Updates</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Live LINE Updates</h3>
         <p style="color:#4A6491;font-size:0.88rem;line-height:1.7;">Every status change — pickup confirmed, at garage, work approved, car returned — is pushed to you on LINE in real time. Zero chasing required.</p>
       </div>
       <div class="card-white reveal">
         <div style="width:50px;height:50px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         </div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Transparent Billing</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:700;color:#0D1F3C;margin-bottom:10px;">Transparent Billing</h3>
         <p style="color:#4A6491;font-size:0.88rem;line-height:1.7;">We send you the exact bill before collecting payment. Nothing is approved without your confirmation. Pay by cash, QR, or card.</p>
       </div>
     </div>
@@ -869,39 +738,39 @@ function showMapEmbed(pickup, garage){
   <div class="container">
     <div style="text-align:center;max-width:580px;margin:0 auto 52px;" class="reveal center">
       <p class="eyebrow">The Founding Team</p>
-      <h2 class="sec-head">Four Papas.<br>One mission.</h2>
-      <p class="sec-sub">We built Papapik because we were frustrated with the same problem you are. We're not a corporation — we're four co-founders who own every detail.</p>
+      <h2 class="sec-head"><span style="display:inline-block;white-space:nowrap;">Four Papas.</span> <span style="display:inline-block;white-space:nowrap;">One mission.</span></h2>
+      <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">We built Papapik because we were frustrated</span> <span style="display:inline-block;white-space:nowrap;">with the same problem you are.</span> <span style="display:inline-block;white-space:nowrap;">We're not a corporation —</span> <span style="display:inline-block;white-space:nowrap;">we're four co-founders who own every detail.</span></p>
     </div>
     <div class="team-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
       <!-- Papa Shine -->
       <div class="card-white reveal" style="padding:28px 22px;">
-        <div class="avatar" style="background:#0D1F3C;color:#F0C040;margin-bottom:16px;">PS</div>
+        <img src="data:image/jpeg;base64,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" alt="Papa Shine" style="width:68px;height:68px;border-radius:50%;object-fit:cover;object-position:center top;margin-bottom:16px;border:2px solid rgba(13,31,60,0.08);">
         <div style="font-size:0.65rem;font-weight:700;color:#00C16E;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Founder · Head Papa</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Shine</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Shine</h3>
         <div style="font-size:0.8rem;font-weight:600;color:#4A6491;margin-bottom:12px;">Lead Driver & Operations</div>
         <p style="font-size:0.86rem;color:#4A6491;line-height:1.65;">The man who knows every garage in Bangkok by name. Papa Shine designed our entire operation, from driver conduct to negotiation. He's the reason no inflated invoice makes it past us.</p>
       </div>
       <!-- Papa Best -->
       <div class="card-white reveal" style="padding:28px 22px;">
-        <div class="avatar" style="background:#1A3A6E;color:#fff;margin-bottom:16px;">PB</div>
+        <img src="data:image/jpeg;base64,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" alt="Papa Best" style="width:68px;height:68px;border-radius:50%;object-fit:cover;object-position:center top;margin-bottom:16px;border:2px solid rgba(13,31,60,0.08);">
         <div style="font-size:0.65rem;font-weight:700;color:#00C16E;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Co-Founder</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Best</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Best</h3>
         <div style="font-size:0.8rem;font-weight:600;color:#4A6491;margin-bottom:12px;">Client Relations & Bookings</div>
         <p style="font-size:0.86rem;color:#4A6491;line-height:1.65;">The voice you'll hear when you call us. Papa Best owns every client relationship, from the first booking to the final handover. He makes sure no one gets left behind.</p>
       </div>
       <!-- Papa Sun -->
       <div class="card-white reveal" style="padding:28px 22px;">
-        <div class="avatar" style="background:#0D1F3C;color:#00C16E;margin-bottom:16px;">PS</div>
+        <img src="data:image/jpeg;base64,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" alt="Papa Sun" style="width:68px;height:68px;border-radius:50%;object-fit:cover;object-position:center top;margin-bottom:16px;border:2px solid rgba(13,31,60,0.08);">
         <div style="font-size:0.65rem;font-weight:700;color:#00C16E;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Co-Founder</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Sun</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Sun</h3>
         <div style="font-size:0.8rem;font-weight:600;color:#4A6491;margin-bottom:12px;">Legal & HR</div>
         <p style="font-size:0.86rem;color:#4A6491;line-height:1.65;">Papapik's legal backbone. Papa Sun authored our service agreements, driver contracts, and compliance standards. When something needs resolving, he's who you talk to.</p>
       </div>
       <!-- Papa Leung -->
       <div class="card-white reveal" style="padding:28px 22px;border:1px solid rgba(0,193,110,0.2);">
-        <div class="avatar" style="background:#071428;color:#00C16E;margin-bottom:16px;">PL</div>
+        <img src="data:image/jpeg;base64,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" alt="Papa Leung" style="width:68px;height:68px;border-radius:50%;object-fit:cover;object-position:center top;margin-bottom:16px;border:2px solid rgba(13,31,60,0.08);">
         <div style="font-size:0.65rem;font-weight:700;color:#F0C040;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Co-Founder · Latest Join</div>
-        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Leung</h3>
+        <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.05rem;font-weight:800;color:#0D1F3C;margin-bottom:4px;">Papa Leung</h3>
         <div style="font-size:0.8rem;font-weight:600;color:#4A6491;margin-bottom:12px;">Technology & Systems</div>
         <p style="font-size:0.86rem;color:#4A6491;line-height:1.65;">The brain behind our booking systems, LINE integrations, and tracking infrastructure. Papa Leung makes sure the tech runs invisibly smooth, so every experience just works.</p>
       </div>
@@ -912,17 +781,17 @@ function showMapEmbed(pickup, garage){
 <!-- ═══════════════════════════════════════════════════
      FIRST TIME FREE — PROMOTION SECTION
 ═══════════════════════════════════════════════════ -->
-<section style="background:linear-gradient(135deg,#071428 0%,#0D1F3C 50%,#1A3A6E 100%);padding:clamp(64px,8vw,96px) 0;position:relative;overflow:hidden;">
+<section style="background:linear-gradient(135deg,#071428 0%,#0D1F3C 50%,#1A3A6E 100%);padding:clamp(70px,9vw,106px) 0;position:relative;overflow:hidden;">
   <div style="position:absolute;inset:0;pointer-events:none;opacity:0.04;background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);background-size:44px 44px;"></div>
   <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,64,0.1) 0%,transparent 60%);top:-150px;right:-100px;pointer-events:none;"></div>
   <div class="container" style="position:relative;z-index:2;text-align:center;">
     <div class="reveal">
       <div style="display:inline-block;background:#F0C040;color:#071428;font-size:0.7rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:6px 18px;border-radius:999px;margin-bottom:20px;">🎁 New Member Offer</div>
-      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:800;color:#fff;letter-spacing:-0.025em;line-height:1.06;margin-bottom:20px;">
-        Your First Pickup.<br><span style="color:#F0C040;">Completely On Us.</span>
+      <h2 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;color:#fff;letter-spacing:-0.025em;line-height:1.06;margin-bottom:20px;">
+        <span style="display:inline-block;white-space:nowrap;">Your First Pickup.</span><br><span style="color:#F0C040;display:inline-block;white-space:nowrap;">Completely On Us.</span>
       </h2>
-      <p style="font-size:1.05rem;color:rgba(255,255,255,0.68);line-height:1.75;max-width:580px;margin:0 auto 14px;">
-        New to Papapik? Your very first car pickup is <strong style="color:#fff;">100% free</strong> — no service fee, no catch, no fine print buried at the bottom. Just book, and we handle the rest.
+      <p style="font-size:1.05rem;color:rgba(255,255,255,0.68);line-height:1.75;max-width:520px;margin:0 auto 14px;">
+        <span style="display:inline-block;white-space:nowrap;">New to Papapik? Your very first car pickup is <strong style="color:#fff;">100% free</strong> —</span> <span style="display:inline-block;white-space:nowrap;">no service fee, no catch, no fine print.</span> <span style="display:inline-block;white-space:nowrap;">Just book, and we handle the rest.</span>
       </p>
       <p style="font-size:0.88rem;color:rgba(255,255,255,0.4);margin:0 auto 36px;max-width:440px;">
         We want you to experience it before you decide. If we don't earn your trust on the first trip, you don't owe us a thing.
@@ -950,7 +819,7 @@ function showMapEmbed(pickup, garage){
       <!-- Left: intro + LINE QR -->
       <div style="flex:0 0 auto;width:clamp(260px,35%,360px);" class="reveal">
         <p class="eyebrow">Book a Pickup</p>
-        <h2 class="sec-head" style="font-size:clamp(1.6rem,2.8vw,2.3rem);">Prefer not to add us on LINE? Fill in the form.</h2>
+        <h2 class="sec-head" style="font-size:clamp(1.3rem,2vw,1.8rem);"><span style="display:inline-block;white-space:nowrap;">Prefer not to add us on LINE?</span> <span style="display:inline-block;white-space:nowrap;">Fill in the form.</span></h2>
         <p class="sec-sub" style="margin-bottom:28px;">We'll receive your request and call you back within 2 hours (during working hours).</p>
         <!-- Contact info -->
         <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
@@ -992,13 +861,13 @@ function showMapEmbed(pickup, garage){
             <div style="width:60px;height:60px;border-radius:50%;background:#F0FFF8;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
             </div>
-            <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#0D1F3C;margin-bottom:10px;">Booking Request Sent!</h3>
+            <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.3rem;font-weight:800;color:#0D1F3C;margin-bottom:10px;">Booking Request Sent!</h3>
             <p style="color:#4A6491;font-size:0.92rem;line-height:1.7;margin-bottom:20px;">We've received your request and will contact you within 2 hours to confirm your slot.</p>
             <button onclick="resetForm()" class="btn-outline" style="font-size:0.88rem;padding:11px 22px;">Submit Another Request</button>
           </div>
           <!-- The form -->
           <div id="booking-form-wrap">
-            <h3 style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:#0D1F3C;margin-bottom:6px;">Request a Pickup</h3>
+            <h3 style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.2rem;font-weight:800;color:#0D1F3C;margin-bottom:6px;">Request a Pickup</h3>
             <p style="font-size:0.84rem;color:#4A6491;margin-bottom:24px;">We'll call you back to confirm. All fields marked * are required.</p>
             <div id="form-error" style="display:none;background:#FFF1F0;border:1px solid #FFCDD2;border-radius:10px;padding:12px 16px;font-size:0.86rem;color:#B71C1C;margin-bottom:18px;"></div>
 
@@ -1072,7 +941,7 @@ function showMapEmbed(pickup, garage){
 <!-- ═══════════════════════════════════════════════════
      FOOTER
 ═══════════════════════════════════════════════════ -->
-<footer class="footer" style="padding:clamp(52px,7vw,80px) 0 32px;">
+<footer class="footer" style="padding:clamp(58px,8vw,88px) 0 36px;">
   <div class="container">
     <div class="footer-cols" style="display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:48px;">
       <!-- Brand -->
