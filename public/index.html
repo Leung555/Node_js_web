@@ -463,7 +463,7 @@ p{margin:0;}
       <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">All trips include a free 15 km radius.</span> <span style="display:inline-block;white-space:nowrap;">See exactly what you'll pay before you book.</span></p>
     </div>
 
-    <!-- ── FARE CALCULATOR ── -->
+    <!-- ── FARE CALCULATOR (GISTDA Sphere) ── -->
     <div class="reveal" style="background:#0D1F3C;border-radius:24px;overflow:hidden;">
       <!-- Header bar -->
       <div style="padding:32px 36px 0;display:flex;align-items:center;gap:14px;">
@@ -474,6 +474,10 @@ p{margin:0;}
           <p style="font-size:0.7rem;font-weight:700;color:#F0C040;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px;">Fare Estimator</p>
           <p style="font-size:1.1rem;font-weight:700;color:#fff;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;">Calculate your trip cost instantly</p>
         </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:5px 12px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C16E" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span style="font-size:0.68rem;color:rgba(255,255,255,0.5);">Powered by GISTDA Sphere</span>
+        </div>
       </div>
 
       <!-- Calculator body -->
@@ -482,7 +486,7 @@ p{margin:0;}
         <!-- Left: inputs -->
         <div style="padding:28px 32px 36px;">
 
-          <!-- Step 1: Service selector -->
+          <!-- Service selector -->
           <div style="margin-bottom:22px;">
             <label style="display:block;font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">1 · Select Service</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
@@ -501,92 +505,78 @@ p{margin:0;}
             </div>
           </div>
 
-          <!-- Step 2: Addresses -->
-          <div style="margin-bottom:22px;">
-            <label style="display:block;font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">2 · Enter Locations</label>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="position:relative;">
-                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-                <input id="calc-pickup" type="text" placeholder="Your pickup location…"
-                  style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:inherit;font-size:0.88rem;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
-                  onfocus="this.style.borderColor='rgba(0,193,110,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-              </div>
-              <div style="position:relative;">
-                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <input id="calc-garage" type="text" placeholder="Service center / garage…"
-                  style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:inherit;font-size:0.88rem;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
-                  onfocus="this.style.borderColor='rgba(0,193,110,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-              </div>
-              <!-- Quick garage chips -->
-              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;">
-                <span style="font-size:0.68rem;color:rgba(255,255,255,0.3);align-self:center;">Quick pick:</span>
-                <button onclick="setGarage('Toyota Ratchadaphisek Bangkok')" class="garage-chip">Toyota Ratchadaphisek</button>
-                <button onclick="setGarage('Honda Ladprao Bangkok')" class="garage-chip">Honda Ladprao</button>
-                <button onclick="setGarage('B-Quik Asoke Bangkok')" class="garage-chip">B-Quik Asoke</button>
-                <button onclick="setGarage('Mazda Ekkamai Bangkok')" class="garage-chip">Mazda Ekkamai</button>
-              </div>
+          <!-- Pickup input with autocomplete -->
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">2 · Your Pickup Location</label>
+            <div style="position:relative;">
+              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;z-index:1;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+              <input id="calc-pickup" type="text" placeholder="พิมพ์ที่อยู่รับรถ เช่น อารีย์, สุขุมวิท 11…" autocomplete="off"
+                style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:inherit;font-size:0.88rem;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
+                onfocus="this.style.borderColor='rgba(0,193,110,0.5)'" onblur="delayHide('pickup-suggest')" oninput="suggest('pickup')">
+              <div id="pickup-suggest" class="sphere-suggest"></div>
             </div>
           </div>
 
-          <!-- Step 3: Distance slider -->
-          <div style="margin-bottom:22px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-              <label style="font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;">3 · One-Way Distance</label>
-              <span style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1rem;font-weight:800;color:#fff;"><span id="km-display">10</span> km</span>
+          <!-- Garage input with autocomplete -->
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">3 · Service Center / Garage</label>
+            <div style="position:relative;">
+              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;z-index:1;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input id="calc-garage" type="text" placeholder="พิมพ์ชื่ออู่หรือศูนย์บริการ เช่น Toyota รัชดา…" autocomplete="off"
+                style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:inherit;font-size:0.88rem;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
+                onfocus="this.style.borderColor='rgba(0,193,110,0.5)'" onblur="delayHide('garage-suggest')" oninput="suggest('garage')">
+              <div id="garage-suggest" class="sphere-suggest"></div>
             </div>
-            <input type="range" id="km-slider" min="1" max="60" value="10" oninput="updateSlider(this.value)"
-              style="width:100%;accent-color:#00C16E;cursor:pointer;height:6px;">
-            <div style="display:flex;justify-content:space-between;margin-top:5px;">
-              <span style="font-size:0.68rem;color:rgba(255,255,255,0.25);">1 km</span>
-              <span style="font-size:0.68rem;color:rgba(255,255,255,0.25);">Free up to 15 km</span>
-              <span style="font-size:0.68rem;color:rgba(255,255,255,0.25);">60 km</span>
+            <!-- Quick pick chips -->
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;">
+              <span style="font-size:0.68rem;color:rgba(255,255,255,0.3);align-self:center;">Quick pick:</span>
+              <button onclick="setPlace('garage','Toyota Ratchadaphisek')" class="garage-chip">Toyota รัชดา</button>
+              <button onclick="setPlace('garage','Honda Ladprao')" class="garage-chip">Honda ลาดพร้าว</button>
+              <button onclick="setPlace('garage','B-Quik Asoke')" class="garage-chip">B-Quik อโศก</button>
+              <button onclick="setPlace('garage','Mazda Ekkamai')" class="garage-chip">Mazda เอกมัย</button>
             </div>
           </div>
 
-          <!-- Show on Map button -->
-          <button onclick="showMap()" id="map-btn"
-            style="width:100%;padding:13px;background:rgba(255,255,255,0.08);color:#fff;border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;"
-            onmouseover="this.style.background='rgba(255,255,255,0.13)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Show Route on Map
+          <!-- Calculate button -->
+          <button onclick="calcRoute()" id="calc-btn"
+            style="width:100%;padding:14px;background:#00C16E;color:#fff;border:none;border-radius:10px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:background 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;"
+            onmouseover="this.style.background='#009954'" onmouseout="this.style.background='#00C16E'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Calculate My Fare
           </button>
-          <p style="font-size:0.7rem;color:rgba(255,255,255,0.28);text-align:center;line-height:1.5;">Opens Google Maps directions in the panel. Adjust the slider to match the distance shown.</p>
+          <p id="calc-error" style="display:none;font-size:0.76rem;color:#F0C040;text-align:center;margin-top:8px;"></p>
         </div>
 
-        <!-- Right: map + fare result -->
-        <div style="padding:28px 32px 36px;border-left:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:16px;">
+        <!-- Right: map + result -->
+        <div style="padding:28px 32px 36px;border-left:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:14px;">
 
-          <!-- Map iframe panel -->
-          <div id="calc-map" style="width:100%;height:240px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <div style="text-align:center;padding:16px;">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <p style="font-size:0.78rem;color:rgba(255,255,255,0.25);margin-top:10px;line-height:1.6;">Enter your locations and tap<br>"Show Route on Map"</p>
-            </div>
+          <!-- Sphere map -->
+          <div id="calc-map" style="width:100%;height:230px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
+            <!-- map mounts here -->
           </div>
 
-          <!-- Live fare breakdown — updates with slider -->
-          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px;flex:1;">
-            <p style="font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">Fare Breakdown</p>
-            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <!-- Fare breakdown -->
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:18px;flex:1;">
+            <p style="font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Fare Breakdown</p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
               <div style="display:flex;justify-content:space-between;align-items:baseline;">
                 <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Round trip distance</span>
-                <span id="res-dist" style="font-size:0.88rem;font-weight:600;color:#fff;">20 km</span>
+                <span id="res-dist" style="font-size:0.88rem;font-weight:600;color:#fff;">— km</span>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:baseline;">
                 <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Base service fee</span>
                 <span id="res-base" style="font-size:0.88rem;font-weight:600;color:#fff;">฿550</span>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;" id="res-surcharge-row">
-                <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Distance surcharge <span id="res-km-detail" style="font-size:0.72rem;color:rgba(255,255,255,0.35);"></span></span>
-                <span id="res-surcharge" style="font-size:0.88rem;font-weight:600;color:#F0C040;">฿0</span>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Distance surcharge <span id="res-km-detail" style="font-size:0.72rem;color:rgba(255,255,255,0.3);"></span></span>
+                <span id="res-surcharge" style="font-size:0.88rem;font-weight:600;color:#F0C040;">—</span>
               </div>
             </div>
-            <!-- Total -->
-            <div style="background:rgba(0,193,110,0.12);border:1px solid rgba(0,193,110,0.25);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="background:rgba(0,193,110,0.12);border:1px solid rgba(0,193,110,0.25);border-radius:10px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
               <span style="font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.75);">Estimated Total</span>
               <span id="res-total" style="font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-size:1.7rem;font-weight:800;color:#00C16E;">฿550</span>
             </div>
-            <p style="font-size:0.7rem;color:rgba(255,255,255,0.25);line-height:1.5;">Estimate based on round trip. Final fare confirmed before we move your car.</p>
+            <p style="font-size:0.7rem;color:rgba(255,255,255,0.25);line-height:1.5;">Route calculated by GISTDA Sphere. Final fare confirmed before we move your car.</p>
           </div>
 
           <a href="#book" class="btn-gold" style="width:100%;justify-content:center;font-size:0.92rem;padding:13px;">
@@ -601,7 +591,6 @@ p{margin:0;}
 </section>
 
 <style>
-/* ── Calculator styles ── */
 .svc-pill{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:rgba(255,255,255,0.65);font-family:inherit;font-size:0.8rem;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:4px;transition:all 0.15s;}
 .svc-pill:hover{border-color:rgba(0,193,110,0.4);background:rgba(0,193,110,0.08);}
 .svc-pill.active{border-color:#00C16E;background:rgba(0,193,110,0.12);color:#fff;}
@@ -609,46 +598,238 @@ p{margin:0;}
 .svc-pill.active .pill-price{color:#00C16E;}
 .garage-chip{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:4px 10px;font-size:0.72rem;color:rgba(255,255,255,0.5);font-family:inherit;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
 .garage-chip:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.sphere-suggest{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1A3A6E;border:1px solid rgba(255,255,255,0.15);border-radius:10px;z-index:999;max-height:180px;overflow-y:auto;display:none;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.sphere-suggest.open{display:block;}
+.sphere-suggest-item{padding:10px 14px;font-size:0.84rem;color:rgba(255,255,255,0.8);cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06);}
+.sphere-suggest-item:last-child{border-bottom:none;}
+.sphere-suggest-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
 @media(max-width:768px){
   #calc-layout{grid-template-columns:1fr!important;}
   #calc-layout>div:last-child{border-left:none!important;border-top:1px solid rgba(255,255,255,0.07);}
 }
 </style>
 
+<!-- GISTDA Sphere JS -->
+<script src="https://api.sphere.gistda.or.th/map/js/?key=F37900F5388744B088C1ABEB922D945A"></script>
 <script>
-/* ── Fare Calculator (embed version) ─────────── */
-var calcBase = 550;
+/* ── Sphere Fare Calculator ───────────────────── */
+var SPHERE_KEY = 'F37900F5388744B088C1ABEB922D945A';
 var FREE_KM = 15;
-var RATE_PER_KM = 6;
+var RATE = 6;
+var calcBase = 550;
+var sphereMap = null;
+var pickupMarker = null;
+var garageMarker = null;
+var pickupLoc = null;
+var garageLoc = null;
 
+// Init Sphere map on load
+window.addEventListener('load', function(){
+  // Small delay so the container is fully painted before Sphere measures it
+  setTimeout(function(){
+    sphereMap = new sphere.Map({
+      placeholder: document.getElementById('calc-map'),
+      zoom: 11,
+      location: { lon: 100.5018, lat: 13.7563 },
+      ui: sphere.UiComponent.None,
+      language: 'th'
+    });
+    sphereMap.Layers.setBase(sphere.Layers.STREETS);
+    // Give route a dummy placeholder div so it doesn't need one
+    var routeEl = document.createElement('div');
+    routeEl.style.display = 'none';
+    document.body.appendChild(routeEl);
+    sphereMap.Route.placeholder(routeEl);
+    sphereMap.Route.auto(true);
+    // Resize once map is ready
+    sphereMap.Event.bind(sphere.EventName.Ready, function(){
+      sphereMap.resize();
+    });
+  }, 300);
+});
+
+// ── Service selector ──────────────────────────
 function selectService(el, base){
   document.querySelectorAll('.svc-pill').forEach(function(b){ b.classList.remove('active'); });
   el.classList.add('active');
   calcBase = base;
-  updateFare();
+  document.getElementById('res-base').textContent = '฿' + base.toLocaleString();
+  updateTotal();
 }
 
-function setGarage(name){
-  document.getElementById('calc-garage').value = name;
+// ── Autocomplete suggest ──────────────────────
+var suggestTimer = null;
+function suggest(field){
+  clearTimeout(suggestTimer);
+  var input = document.getElementById('calc-' + field);
+  var box = document.getElementById(field + '-suggest');
+  var kw = input.value.trim();
+  if(kw.length < 2){ box.classList.remove('open'); return; }
+  suggestTimer = setTimeout(function(){
+    sphereMap.Search.suggest(kw, { limit: 6 }).then(function(res){
+      box.innerHTML = '';
+      if(!res || !res.data || !res.data.length){ box.classList.remove('open'); return; }
+      res.data.forEach(function(item){
+        var div = document.createElement('div');
+        div.className = 'sphere-suggest-item';
+        div.textContent = item.name + (item.address ? ', ' + item.address : '');
+        div.onclick = function(){
+          input.value = item.name;
+          box.classList.remove('open');
+          if(field === 'pickup') pickupLoc = { lon: item.lon, lat: item.lat };
+          else garageLoc = { lon: item.lon, lat: item.lat };
+          placeMarker(field, { lon: item.lon, lat: item.lat });
+        };
+        box.appendChild(div);
+      });
+      box.classList.add('open');
+    }).catch(function(){ box.classList.remove('open'); });
+  }, 280);
 }
 
-function updateSlider(val){
-  document.getElementById('km-display').textContent = val;
-  updateFare();
+function delayHide(id){
+  setTimeout(function(){ document.getElementById(id).classList.remove('open'); }, 200);
 }
 
-function updateFare(){
-  var oneWayKm = parseInt(document.getElementById('km-slider').value) || 10;
-  var totalKm = oneWayKm * 2; // round trip
+function setPlace(field, name){
+  var input = document.getElementById('calc-' + field);
+  input.value = name;
+  suggest(field);
+}
+
+// ── Place marker on map ───────────────────────
+function placeMarker(field, loc){
+  if(!sphereMap) return;
+  if(field === 'pickup'){
+    if(pickupMarker) sphereMap.Overlays.remove(pickupMarker);
+    pickupMarker = new sphere.Marker(loc, { title: 'Pickup' });
+    sphereMap.Overlays.add(pickupMarker);
+    pickupLoc = loc;
+  } else {
+    if(garageMarker) sphereMap.Overlays.remove(garageMarker);
+    garageMarker = new sphere.Marker(loc, { title: 'Garage' });
+    sphereMap.Overlays.add(garageMarker);
+    garageLoc = loc;
+  }
+  // Fit map to show both markers if both set
+  if(pickupLoc && garageLoc){
+    sphereMap.bound({
+      minLon: Math.min(pickupLoc.lon, garageLoc.lon) - 0.01,
+      minLat: Math.min(pickupLoc.lat, garageLoc.lat) - 0.01,
+      maxLon: Math.max(pickupLoc.lon, garageLoc.lon) + 0.01,
+      maxLat: Math.max(pickupLoc.lat, garageLoc.lat) + 0.01
+    });
+  } else {
+    sphereMap.location(loc, true);
+    sphereMap.zoom(14, true);
+  }
+}
+
+// ── Calculate route ───────────────────────────
+function calcRoute(){
+  var errEl = document.getElementById('calc-error');
+  errEl.style.display = 'none';
+
+  // If we don't have coords yet, try to geocode from text
+  var pickupText = document.getElementById('calc-pickup').value.trim();
+  var garageText = document.getElementById('calc-garage').value.trim();
+
+  if(!pickupText || !garageText){
+    errEl.textContent = 'Please enter both a pickup location and service center.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  var btn = document.getElementById('calc-btn');
+  btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Calculating…';
+  btn.disabled = true;
+
+  // Geocode both if we don't have coords
+  var p1 = pickupLoc ? Promise.resolve(pickupLoc) : geocode(pickupText);
+  var p2 = garageLoc ? Promise.resolve(garageLoc) : geocode(garageText);
+
+  Promise.all([p1, p2]).then(function(locs){
+    pickupLoc = locs[0];
+    garageLoc = locs[1];
+    placeMarker('pickup', pickupLoc);
+    placeMarker('garage', garageLoc);
+
+    // Use Sphere Route to get driving distance
+    sphereMap.Route.clear();
+    sphereMap.Route.mode(sphere.RouteMode.Cost);
+
+    var routeTimeout = setTimeout(function(){
+      sphereMap.Event.unbind(sphere.EventName.RouteComplete, onRoute);
+      sphereMap.Event.unbind(sphere.EventName.RouteError, onErr);
+      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
+      btn.disabled = false;
+      errEl.textContent = 'Route timed out. Please check addresses and try again.';
+      errEl.style.display = 'block';
+    }, 10000);
+
+    function onRoute(){
+      clearTimeout(routeTimeout);
+      sphereMap.Event.unbind(sphere.EventName.RouteComplete, onRoute);
+      sphereMap.Event.unbind(sphere.EventName.RouteError, onErr);
+      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
+      btn.disabled = false;
+      // Use .distance() helper — returns metres
+      var oneWayM = sphereMap.Route.distance(false);
+      if(!oneWayM || oneWayM <= 0){
+        errEl.textContent = 'Could not calculate distance. Please try again.';
+        errEl.style.display = 'block';
+        return;
+      }
+      var totalKm = (oneWayM / 1000) * 2; // round trip
+      renderFare(totalKm);
+    }
+
+    function onErr(){
+      clearTimeout(routeTimeout);
+      sphereMap.Event.unbind(sphere.EventName.RouteComplete, onRoute);
+      sphereMap.Event.unbind(sphere.EventName.RouteError, onErr);
+      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
+      btn.disabled = false;
+      errEl.textContent = 'Routing failed. Please try different addresses.';
+      errEl.style.display = 'block';
+    }
+
+    sphereMap.Event.bind(sphere.EventName.RouteComplete, onRoute);
+    sphereMap.Event.bind(sphere.EventName.RouteError, onErr);
+
+    sphereMap.Route.add(new sphere.Marker(pickupLoc));
+    sphereMap.Route.add(new sphere.Marker(garageLoc));
+    sphereMap.Route.search();
+
+  }).catch(function(){
+    btn.textContent = 'Calculate My Fare';
+    btn.disabled = false;
+    errEl.textContent = 'Could not find one of the locations. Please be more specific.';
+    errEl.style.display = 'block';
+  });
+}
+
+// Geocode a text string using Sphere Search
+function geocode(text){
+  return sphereMap.Search.suggest(text, { limit: 1 }).then(function(res){
+    if(res && res.data && res.data.length){
+      return { lon: res.data[0].lon, lat: res.data[0].lat };
+    }
+    throw new Error('Not found');
+  });
+}
+
+// ── Render fare breakdown ─────────────────────
+function renderFare(totalKm){
   var billableKm = Math.max(0, totalKm - FREE_KM);
-  var surcharge = billableKm * RATE_PER_KM;
+  var surcharge = Math.round(billableKm * RATE);
   var total = calcBase + surcharge;
 
-  document.getElementById('res-dist').textContent = totalKm + ' km (round trip)';
+  document.getElementById('res-dist').textContent = totalKm.toFixed(1) + ' km (round trip)';
   document.getElementById('res-base').textContent = '฿' + calcBase.toLocaleString();
   if(surcharge > 0){
     document.getElementById('res-surcharge').textContent = '+฿' + surcharge.toLocaleString();
-    document.getElementById('res-km-detail').textContent = '(' + billableKm + ' km × ฿6)';
+    document.getElementById('res-km-detail').textContent = '(' + billableKm.toFixed(1) + ' km × ฿6)';
   } else {
     document.getElementById('res-surcharge').textContent = '฿0';
     document.getElementById('res-km-detail').textContent = '(within free 15 km)';
@@ -656,22 +837,12 @@ function updateFare(){
   document.getElementById('res-total').textContent = '฿' + total.toLocaleString();
 }
 
-function showMap(){
-  var pickup = document.getElementById('calc-pickup').value.trim();
-  var garage = document.getElementById('calc-garage').value.trim();
-  if(!pickup || !garage){
-    alert('Please enter both a pickup location and a service center first.');
-    return;
-  }
-  var origin = encodeURIComponent(pickup + ', Bangkok, Thailand');
-  var dest = encodeURIComponent(garage + ', Bangkok, Thailand');
-  var src = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&origin=' + origin + '&destination=' + dest + '&mode=driving&language=en&region=TH';
-  var mapDiv = document.getElementById('calc-map');
-  mapDiv.innerHTML = '<iframe src="' + src + '" width="100%" height="240" style="border:none;border-radius:14px;" allowfullscreen loading="lazy"></iframe>';
+function updateTotal(){
+  var surchargeText = document.getElementById('res-surcharge').textContent;
+  if(surchargeText === '—') return;
+  var dist = parseFloat(document.getElementById('res-dist').textContent) || 0;
+  renderFare(dist);
 }
-
-// Init on load
-updateFare();
 </script>
 
 <!-- ═══════════════════════════════════════════════════
