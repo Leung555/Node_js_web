@@ -676,9 +676,11 @@ function suggest(field){
         div.onclick = function(){
           input.value = item.name;
           box.classList.remove('open');
-          if(field === 'pickup') pickupLoc = { lon: item.lon, lat: item.lat };
-          else garageLoc = { lon: item.lon, lat: item.lat };
-          placeMarker(field, { lon: item.lon, lat: item.lat });
+          var loc = { lon: item.lon, lat: item.lat };
+          console.log('Selected ' + field + ':', JSON.stringify(loc));
+          if(field === 'pickup') pickupLoc = loc;
+          else garageLoc = loc;
+          placeMarker(field, loc);
         };
         box.appendChild(div);
       });
@@ -812,6 +814,7 @@ function calcRoute(){
 // Geocode a text string using Sphere Search
 function geocode(text){
   return sphereMap.Search.suggest(text, { limit: 1 }).then(function(res){
+    console.log('Geocode result for "' + text + '":', JSON.stringify(res));
     if(res && res.data && res.data.length && res.data[0].lon){
       return { lon: res.data[0].lon, lat: res.data[0].lat };
     }
