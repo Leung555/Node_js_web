@@ -721,6 +721,7 @@ function calcRoute(){
   errEl.style.display = 'none';
   var pickupText = document.getElementById('calc-pickup').value.trim();
   var garageText = document.getElementById('calc-garage').value.trim();
+  console.log('calcRoute called. pickupLoc:', JSON.stringify(pickupLoc), 'garageLoc:', JSON.stringify(garageLoc));
   if(!pickupText || !garageText){
     errEl.textContent = 'Please enter both a pickup location and service center.';
     errEl.style.display = 'block';
