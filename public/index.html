@@ -144,7 +144,6 @@ p{margin:0;}
   .promo-bar{font-size:0.76rem;padding-left:12px;}
 }
 </style>
-<script type="text/javascript" src="https://api.sphere.gistda.or.th/map/?key=F37900F5388744B088C1ABEB922D945A"></script>
 </head>
 <body onload="init()">
 
@@ -613,39 +612,17 @@ p{margin:0;}
 }
 </style>
 
-<!-- GISTDA Sphere JS loaded in <head> -->
+<!-- GISTDA Sphere REST API Calculator — no JS SDK needed -->
 <script>
-/* ── Sphere map vars ── */
-var sphereMap = null;
-var pickupMarker = null;
-var garageMarker = null;
-var pickupLoc = null;
-var garageLoc = null;
-
-/* ── Fare Calculator vars ── */
+var SPHERE_KEY = 'F37900F5388744B088C1ABEB922D945A';
 var FREE_KM = 15;
 var RATE = 6;
 var calcBase = 550;
+var pickupLoc = null;
+var garageLoc = null;
+var suggestTimer = null;
 
-/* ── Init — called by body onload ── */
-function init(){
-  // Create a hidden map div for Sphere Search & Route API access
-  var hiddenMap = document.createElement('div');
-  hiddenMap.style.cssText = 'position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;top:-9999px;';
-  document.body.appendChild(hiddenMap);
-  sphereMap = new sphere.Map({
-    placeholder: hiddenMap,
-    zoom: 11,
-    location: { lon: 100.5018, lat: 13.7563 },
-    ui: sphere.UiComponent.None,
-    language: 'th'
-  });
-  var routeEl = document.createElement('div');
-  routeEl.style.display = 'none';
-  document.body.appendChild(routeEl);
-  sphereMap.Route.placeholder(routeEl);
-  sphereMap.Route.auto(true);
-}
+function init(){ /* body onload — nothing to init for REST approach */ }
 
 // ── Service selector ──────────────────────────
 function selectService(el, base){
@@ -653,42 +630,55 @@ function selectService(el, base){
   el.classList.add('active');
   calcBase = base;
   document.getElementById('res-base').textContent = '฿' + base.toLocaleString();
-  updateTotal();
 }
 
-// ── Autocomplete suggest ──────────────────────
-var suggestTimer = null;
+// ── Autocomplete via REST Suggest ─────────────
 function suggest(field){
   clearTimeout(suggestTimer);
   var input = document.getElementById('calc-' + field);
   var box = document.getElementById(field + '-suggest');
   var kw = input.value.trim();
-  // Reset stored coords when user types manually
   if(field === 'pickup') pickupLoc = null;
   else garageLoc = null;
   if(kw.length < 2){ box.classList.remove('open'); return; }
   suggestTimer = setTimeout(function(){
-    sphereMap.Search.suggest(kw, { limit: 6 }).then(function(res){
-      box.innerHTML = '';
-      if(!res || !res.data || !res.data.length){ box.classList.remove('open'); return; }
-      res.data.forEach(function(item){
-        var div = document.createElement('div');
-        div.className = 'sphere-suggest-item';
-        div.textContent = item.name + (item.address ? ', ' + item.address : '');
-        div.onclick = function(){
-          input.value = item.name;
-          box.classList.remove('open');
-          var loc = { lon: item.lon, lat: item.lat };
-          console.log('Selected ' + field + ':', JSON.stringify(loc));
+    fetch('https://api.sphere.gistda.or.th/services/search/suggest?keyword=' + encodeURIComponent(kw) + '&limit=6&key=' + SPHERE_KEY)
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        box.innerHTML = '';
+        if(!res || !res.data || !res.data.length){ box.classList.remove('open'); return; }
+        res.data.forEach(function(item){
+          var div = document.createElement('div');
+          div.className = 'sphere-suggest-item';
+          div.textContent = item.name;
+          div.onclick = function(){
+            input.value = item.name;
+            box.classList.remove('open');
+            // Fetch full details to get coordinates
+            searchPlace(item.name, field);
+          };
+          box.appendChild(div);
+        });
+        box.classList.add('open');
+      }).catch(function(){ box.classList.remove('open'); });
+  }, 280);
+}
+
+// ── Get coordinates from search ───────────────
+function searchPlace(name, field){
+  fetch('https://api.sphere.gistda.or.th/services/search/search?keyword=' + encodeURIComponent(name) + '&limit=1&key=' + SPHERE_KEY)
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.data && res.data.length){
+        var item = res.data[0];
+        var loc = { lon: item.lon || item.longitude, lat: item.lat || item.latitude };
+        if(loc.lon && loc.lat){
           if(field === 'pickup') pickupLoc = loc;
           else garageLoc = loc;
-          placeMarker(field, loc);
-        };
-        box.appendChild(div);
-      });
-      box.classList.add('open');
-    }).catch(function(){ box.classList.remove('open'); });
-  }, 280);
+          updateMapIframe();
+        }
+      }
+    }).catch(function(){});
 }
 
 function delayHide(id){
@@ -696,146 +686,92 @@ function delayHide(id){
 }
 
 function setPlace(field, name){
-  var input = document.getElementById('calc-' + field);
-  input.value = name;
-  // Geocode the chip name immediately and store coords
-  if(sphereMap){
-    sphereMap.Search.suggest(name, { limit: 1 }).then(function(res){
-      if(res && res.data && res.data.length && res.data[0].lon){
-        var loc = { lon: res.data[0].lon, lat: res.data[0].lat };
-        console.log('Chip geocoded ' + field + ':', JSON.stringify(loc));
-        if(field === 'pickup') pickupLoc = loc;
-        else garageLoc = loc;
-        placeMarker(field, loc);
-      }
-    });
-  }
+  document.getElementById('calc-' + field).value = name;
+  searchPlace(name, field);
 }
 
-// Update iframe map to show locations
+// ── Update embed map ──────────────────────────
 function updateMapIframe(){
   var iframe = document.getElementById('calc-map-iframe');
   if(!iframe) return;
-  var baseUrl = 'https://api.sphere.gistda.or.th/services/snippet/embed?locale=th&map=sphere_streets&key=F37900F5388744B088C1ABEB922D945A';
+  var base = 'https://api.sphere.gistda.or.th/services/snippet/embed?locale=th&map=sphere_streets&key=' + SPHERE_KEY;
   if(pickupLoc && garageLoc){
-    // Show midpoint between both locations
     var midLon = (pickupLoc.lon + garageLoc.lon) / 2;
     var midLat = (pickupLoc.lat + garageLoc.lat) / 2;
-    iframe.src = baseUrl + '&lon=' + midLon + '&lat=' + midLat + '&zoom=12';
+    iframe.src = base + '&lon=' + midLon + '&lat=' + midLat + '&zoom=12';
   } else if(pickupLoc){
-    iframe.src = baseUrl + '&lon=' + pickupLoc.lon + '&lat=' + pickupLoc.lat + '&zoom=14';
+    iframe.src = base + '&lon=' + pickupLoc.lon + '&lat=' + pickupLoc.lat + '&zoom=14';
   } else if(garageLoc){
-    iframe.src = baseUrl + '&lon=' + garageLoc.lon + '&lat=' + garageLoc.lat + '&zoom=14';
+    iframe.src = base + '&lon=' + garageLoc.lon + '&lat=' + garageLoc.lat + '&zoom=14';
   }
 }
 
-function placeMarker(field, loc){
-  if(field === 'pickup') pickupLoc = loc;
-  else garageLoc = loc;
-  updateMapIframe();
-}
-
-// ── Calculate route ───────────────────────────
+// ── Calculate route via REST ──────────────────
 function calcRoute(){
   var errEl = document.getElementById('calc-error');
   errEl.style.display = 'none';
-
-  // If we don't have coords yet, try to geocode from text
   var pickupText = document.getElementById('calc-pickup').value.trim();
   var garageText = document.getElementById('calc-garage').value.trim();
-
   if(!pickupText || !garageText){
     errEl.textContent = 'Please enter both a pickup location and service center.';
     errEl.style.display = 'block';
     return;
   }
-
   var btn = document.getElementById('calc-btn');
   btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation:spin 0.8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Calculating…';
   btn.disabled = true;
 
-  // Geocode both if we don't have coords
-  var p1 = pickupLoc ? Promise.resolve(pickupLoc) : geocode(pickupText);
-  var p2 = garageLoc ? Promise.resolve(garageLoc) : geocode(garageText);
+  var p1 = pickupLoc ? Promise.resolve(pickupLoc) : geocodeREST(pickupText);
+  var p2 = garageLoc ? Promise.resolve(garageLoc) : geocodeREST(garageText);
 
   Promise.all([p1, p2]).then(function(locs){
     pickupLoc = locs[0];
     garageLoc = locs[1];
-    placeMarker('pickup', pickupLoc);
-    placeMarker('garage', garageLoc);
-
-    // Use Sphere Route to get driving distance
-    sphereMap.Route.clear();
-    sphereMap.Route.mode(sphere.RouteMode.Cost);
-
-    var routeTimeout = setTimeout(function(){
-      sphereMap.Event.unbind(sphere.EventName.RouteComplete, onRoute);
-      sphereMap.Event.unbind(sphere.EventName.RouteError, onErr);
-      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
-      btn.disabled = false;
-      errEl.textContent = 'Route timed out. Please check addresses and try again.';
-      errEl.style.display = 'block';
-    }, 10000);
-
-    function onRoute(){
-      clearTimeout(routeTimeout);
-      sphereMap.Event.unbind(sphere.EventName.RouteComplete, onRoute);
-      sphereMap.Event.unbind(sphere.EventName.RouteError, onErr);
-      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
-      btn.disabled = false;
-      // Use .distance() helper — returns metres
-      var oneWayM = sphereMap.Route.distance(false);
-      if(!oneWayM || oneWayM <= 0){
-        errEl.textContent = 'Could not calculate distance. Please try again.';
-        errEl.style.display = 'block';
-        return;
-      }
-      var totalKm = (oneWayM / 1000) * 2; // round trip
-      renderFare(totalKm);
-    }
-
-    function onErr(){
-      clearTimeout(routeTimeout);
-      sphereMap.Event.unbind(sphere.EventName.RouteComplete, onRoute);
-      sphereMap.Event.unbind(sphere.EventName.RouteError, onErr);
-      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
-      btn.disabled = false;
-      errEl.textContent = 'Routing failed. Please try different addresses.';
-      errEl.style.display = 'block';
-    }
-
-    sphereMap.Event.bind(sphere.EventName.RouteComplete, onRoute);
-    sphereMap.Event.bind(sphere.EventName.RouteError, onErr);
-
-    sphereMap.Route.add(new sphere.Marker(pickupLoc));
-    sphereMap.Route.add(new sphere.Marker(garageLoc));
-    sphereMap.Route.search();
-
-  }).catch(function(){
-    btn.textContent = 'Calculate My Fare';
+    updateMapIframe();
+    // Call Sphere Routing REST API
+    var url = 'https://api.sphere.gistda.or.th/services/route/route'
+      + '?flon=' + pickupLoc.lon + '&flat=' + pickupLoc.lat
+      + '&tlon=' + garageLoc.lon + '&tlat=' + garageLoc.lat
+      + '&mode=d&key=' + SPHERE_KEY;
+    return fetch(url).then(function(r){ return r.json(); });
+  }).then(function(route){
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
     btn.disabled = false;
-    errEl.textContent = 'Could not find one of the locations. Please be more specific.';
+    // Parse distance from route response
+    var distM = route && route.data && route.data[0] && route.data[0].distance;
+    if(!distM){
+      errEl.textContent = 'Could not calculate route. Please select locations from the dropdown.';
+      errEl.style.display = 'block';
+      return;
+    }
+    var totalKm = (distM / 1000) * 2; // round trip
+    renderFare(totalKm);
+  }).catch(function(e){
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
+    btn.disabled = false;
+    errEl.textContent = 'Could not find location. Please select from the dropdown list.';
     errEl.style.display = 'block';
   });
 }
 
-// Geocode a text string using Sphere Search
-function geocode(text){
-  return sphereMap.Search.suggest(text, { limit: 1 }).then(function(res){
-    console.log('Geocode result for "' + text + '":', JSON.stringify(res));
-    if(res && res.data && res.data.length && res.data[0].lon){
-      return { lon: res.data[0].lon, lat: res.data[0].lat };
-    }
-    throw new Error('Not found: ' + text);
-  });
+function geocodeREST(text){
+  return fetch('https://api.sphere.gistda.or.th/services/search/search?keyword=' + encodeURIComponent(text) + '&limit=1&key=' + SPHERE_KEY)
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.data && res.data.length){
+        var item = res.data[0];
+        var lon = item.lon || item.longitude;
+        var lat = item.lat || item.latitude;
+        if(lon && lat) return { lon: lon, lat: lat };
+      }
+      throw new Error('Not found: ' + text);
+    });
 }
 
-// ── Render fare breakdown ─────────────────────
 function renderFare(totalKm){
   var billableKm = Math.max(0, totalKm - FREE_KM);
   var surcharge = Math.round(billableKm * RATE);
   var total = calcBase + surcharge;
-
   document.getElementById('res-dist').textContent = totalKm.toFixed(1) + ' km (round trip)';
   document.getElementById('res-base').textContent = '฿' + calcBase.toLocaleString();
   if(surcharge > 0){
@@ -846,13 +782,6 @@ function renderFare(totalKm){
     document.getElementById('res-km-detail').textContent = '(within free 15 km)';
   }
   document.getElementById('res-total').textContent = '฿' + total.toLocaleString();
-}
-
-function updateTotal(){
-  var surchargeText = document.getElementById('res-surcharge').textContent;
-  if(surchargeText === '—') return;
-  var dist = parseFloat(document.getElementById('res-dist').textContent) || 0;
-  renderFare(dist);
 }
 </script>
 
