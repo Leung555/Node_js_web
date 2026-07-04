@@ -131,14 +131,30 @@ p{margin:0;}
   .team-grid{grid-template-columns:1fr 1fr!important;}
 }
 @media(max-width:600px){
-  .steps-grid{grid-template-columns:1fr!important;}
+  .hero-headline-desktop{display:none!important;}
+  .hero-headline-mobile{display:block!important;}
   .hero-ctas{flex-direction:column;}
   .hero-ctas a,.hero-ctas button{width:100%;justify-content:center;}
+  .steps-grid{grid-template-columns:1fr!important;}
   .trust-grid{grid-template-columns:1fr!important;}
   .pricing-grid{grid-template-columns:1fr!important;}
   .team-grid{grid-template-columns:1fr!important;}
   .form-grid{grid-template-columns:1fr!important;}
   .footer-cols{flex-direction:column!important;gap:32px!important;}
+  /* Kill all nowrap spans — let text flow naturally on mobile */
+  span[style*="white-space:nowrap"],
+  div[style*="white-space:nowrap"],
+  h2[style*="white-space:nowrap"]{
+    white-space:normal!important;
+    display:inline!important;
+  }
+  /* Prevent any element from overflowing screen width */
+  body, .container { overflow-x:hidden; }
+  h1,h2,h3,p { word-break:break-word; }
+  .sec-head { font-size:clamp(1.4rem,6vw,2rem)!important; }
+  /* Fix flex sections that go side-by-side on mobile */
+  .feature-inner { flex-direction:column!important; }
+  [style*="display:flex"][style*="gap:clamp"] { flex-direction:column!important; }
 }
 @media(max-width:480px){
   .promo-bar{font-size:0.76rem;padding-left:12px;}
@@ -218,14 +234,19 @@ p{margin:0;}
       </div>
       <!-- Headline -->
       <div class="reveal" style="margin-bottom:24px;display:flex;justify-content:center;">
-        <div style="display:flex;align-items:center;gap:16px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-weight:800;letter-spacing:-0.03em;line-height:1;">
-          <!-- YOUR — tall anchor -->
+        <!-- Desktop: YOUR left, two lines right -->
+        <div class="hero-headline-desktop" style="display:flex;align-items:center;gap:16px;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-weight:800;letter-spacing:-0.03em;line-height:1;">
           <div style="font-size:clamp(5rem,11vw,9rem);color:#fff;line-height:1;flex-shrink:0;">YOUR</div>
-          <!-- Two lines stacked -->
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div style="font-size:clamp(1.6rem,3.6vw,3rem);color:#fff;white-space:nowrap;">Car Gets Serviced.</div>
             <div style="font-size:clamp(1.6rem,3.6vw,3rem);color:#00C16E;white-space:nowrap;">Saturday Stays Yours.</div>
           </div>
+        </div>
+        <!-- Mobile: stacked -->
+        <div class="hero-headline-mobile" style="display:none;font-family:'Helvetica Neue','Helvetica',Arial,sans-serif;font-weight:800;letter-spacing:-0.03em;line-height:1.05;text-align:center;">
+          <div style="font-size:clamp(3.5rem,18vw,6rem);color:#fff;">YOUR</div>
+          <div style="font-size:clamp(1.6rem,7vw,2.4rem);color:#fff;">Car Gets Serviced.</div>
+          <div style="font-size:clamp(1.6rem,7vw,2.4rem);color:#00C16E;">Saturday Stays Yours.</div>
         </div>
       </div>
       <!-- Sub -->
@@ -389,7 +410,7 @@ p{margin:0;}
   <div class="container" style="position:relative;z-index:2;">
     <div style="max-width:580px;margin-bottom:52px;" class="reveal">
       <p class="eyebrow">All Services</p>
-      <h2 class="sec-head sec-head-light" style="font-size:clamp(1.5rem,2.6vw,2.2rem);white-space:nowrap;">Everything your car needs, handled.</h2>
+      <h2 class="sec-head sec-head-light" style="font-size:clamp(1.5rem,2.6vw,2.2rem);">Everything your car needs, handled.</h2>
       <p class="sec-sub-light"><span style="display:inline-block;white-space:nowrap;">One call, one team, every use case.</span> <span style="display:inline-block;white-space:nowrap;">From routine maintenance to annual registration.</span></p>
     </div>
     <!-- Featured: Maintenance -->
@@ -668,7 +689,6 @@ function extractCoords(item){
   // Sphere API may use different field names depending on endpoint
   var lon = item.lon || item.longitude || item.x || (item.location && item.location.lon) || (item.location && item.location.longitude);
   var lat = item.lat || item.latitude || item.y || (item.location && item.location.lat) || (item.location && item.location.latitude);
-  console.log('extractCoords from:', JSON.stringify(item), '→ lon:', lon, 'lat:', lat);
   if(lon && lat) return { lon: parseFloat(lon), lat: parseFloat(lat) };
   return null;
 }
@@ -678,7 +698,6 @@ function searchPlace(name, field){
   fetch('https://api.sphere.gistda.or.th/services/search/search?keyword=' + encodeURIComponent(name) + '&limit=1&key=' + SPHERE_KEY)
     .then(function(r){ return r.json(); })
     .then(function(res){
-      console.log('searchPlace result:', JSON.stringify(res).substring(0,300));
       if(res && res.data && res.data.length){
         var loc = extractCoords(res.data[0]);
         if(loc){
@@ -687,7 +706,6 @@ function searchPlace(name, field){
           updateMapIframe();
         }
       }
-    }).catch(function(e){ console.log('searchPlace error:', e); });
 }
 
 function delayHide(id){
@@ -721,7 +739,6 @@ function calcRoute(){
   errEl.style.display = 'none';
   var pickupText = document.getElementById('calc-pickup').value.trim();
   var garageText = document.getElementById('calc-garage').value.trim();
-  console.log('calcRoute called. pickupLoc:', JSON.stringify(pickupLoc), 'garageLoc:', JSON.stringify(garageLoc));
   if(!pickupText || !garageText){
     errEl.textContent = 'Please enter both a pickup location and service center.';
     errEl.style.display = 'block';
@@ -745,7 +762,6 @@ function calcRoute(){
       + '&mode=d&key=' + SPHERE_KEY;
     return fetch(url).then(function(r){ return r.json(); });
   }).then(function(route){
-    console.log('Route response:', JSON.stringify(route).substring(0, 500));
     btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Calculate My Fare';
     btn.disabled = false;
     // Route returns GeoJSON FeatureCollection — sum all segment distances
@@ -757,7 +773,6 @@ function calcRoute(){
     } else if(route && route.data && route.data[0]) {
       distM = route.data[0].distance || route.data[0].dist || route.data[0].total_distance || 0;
     }
-    console.log('Total distance (m):', distM);
     if(!distM || distM <= 0){
       errEl.textContent = 'Could not calculate route. Please select locations from the dropdown.';
       errEl.style.display = 'block';
@@ -777,7 +792,6 @@ function geocodeREST(text){
   return fetch('https://api.sphere.gistda.or.th/services/search/search?keyword=' + encodeURIComponent(text) + '&limit=1&key=' + SPHERE_KEY)
     .then(function(r){ return r.json(); })
     .then(function(res){
-      console.log('geocodeREST result for "' + text + '":', JSON.stringify(res).substring(0,300));
       if(res && res.data && res.data.length){
         var loc = extractCoords(res.data[0]);
         if(loc) return loc;
@@ -1228,7 +1242,6 @@ function submitBooking(e){
   bookingLog.push(entry);
 
   // Log to console (backend integration point)
-  console.log('[Papapik Booking]', JSON.stringify(entry, null, 2));
 
   // Build mailto link as fallback email trigger
   var subject = encodeURIComponent('New Booking Request — ' + name + ' [' + plate + ']');
